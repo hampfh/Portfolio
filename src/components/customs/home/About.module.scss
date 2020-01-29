@@ -1,0 +1,36 @@
+@import 'src/root';
+
+.aboutContainer {
+    position: relative;
+    width: 90%;
+    max-width: 40rem;
+    text-align: left;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.portrait {
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.aside {
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.article h2 {
+    margin-bottom: 1rem;
+}
+
+.article p {
+    line-height: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: $media-min-desktop-view) {
+    .aboutContainer {
+        
+    }
+}

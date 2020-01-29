@@ -1,0 +1,38 @@
+@import 'src/root';
+
+.footer {
+    padding: 1rem 4rem;
+    background-color: $color-background-dark;
+}
+
+.footer h4,
+.footer p {
+    color: $color-text-secondary;
+}
+
+.socialMedia {
+    display: grid;
+    justify-content: center;
+
+    margin-bottom: 1rem;
+}
+
+.socialMedia h4 {
+    margin-bottom: 0.5rem;
+}
+
+.socialMedia ul {
+    padding: 0;
+    text-align: center;
+}
+.socialMedia ul a {
+    margin-bottom: 0.25rem;
+}
+
+.copyright {
+    margin-bottom: 0;
+    font-style: italic;
+}
+.copyright p {
+    text-align: center;
+}

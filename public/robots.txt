@@ -1,2 +1,8 @@
-# https://www.robotstxt.org/robotstxt.html
+User-agent: Googlebot-Image
+Disallow: /
+
 User-agent: *
+Disallow: /*.gif$
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$

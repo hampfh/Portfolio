@@ -1,0 +1,44 @@
+@import 'src/root';
+
+.introContainer {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.aside {
+    display: none;
+}
+
+.fullname {
+    margin-bottom: 0.5rem;
+}
+
+.textContainer {
+    position: relative;
+    bottom: 2rem;
+}
+
+@media (min-width: $media-min-middle-view) {
+    .introContainer {
+        display: flex;
+        grid-template-columns: 1fr 1.5fr;
+        grid-column-gap: 6rem;
+        margin: 0 5rem;
+        height: 15rem;
+
+        margin: 5rem auto;
+
+        max-width: 80rem;
+    }
+}
+
+@media (min-width: $media-min-desktop-view) {
+    .introContainer {
+        height: 30rem;
+    }
+    .aside {
+        display: block;
+    }
+}
