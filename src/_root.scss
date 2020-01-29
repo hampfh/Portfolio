@@ -1,0 +1,237 @@
+@import "variables";
+
+* {
+  box-sizing: border-box;
+  transition: all ease-in-out 100ms;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@font-face {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  src: local("Roboto"), url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+  font-display: swap;
+}
+html {
+  animation: fadein 0.2s;
+}
+body {
+  margin: 0;
+  background-color: $color-background;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  user-select: none;
+}
+.selectable {
+  user-select: text;
+}
+.containerMaster {
+  min-height: 100vh;
+}
+.containerFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 6px 12px 12px 12px;
+}
+.container {
+  margin: 6px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: $color-background-light;
+  border: 1px solid $color-background-dark;
+}
+h1 {
+  color: $color-text-primary;
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+h2 {
+  font-weight: 500;
+  font-size: 1rem;
+  color: $color-text-primary;
+  text-align: start;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+h3 {
+  color: $color-text-primary;
+  text-align: start;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+p {
+  text-align: start;
+  padding: 0;
+  color: $color-text-secondary;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+a {
+  text-decoration: none;
+  user-select: none;
+}
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+}
+label {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  text-align: left;
+  display: block;
+  margin: 1rem 0 0.4rem 0.4rem;
+  color: $color-text-secondary;
+}
+form {
+  width: 16rem;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+}
+input,
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: border ease-in-out 100ms;
+  outline: 0;
+  display: block;
+  resize: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  color: $color-text-primary;
+  background-color: $color-background-medium;
+  border: 1px solid $color-background-medium;
+  border-radius: 4px;
+  width: 16rem;
+  height: 2.4rem;
+  padding: 16px;
+  margin: 0 auto;
+}
+textarea {
+  margin-top: 1rem;
+  min-height: 10rem;
+  overflow-y: hidden;
+}
+textarea::placeholder {
+  color: $color-text-third;
+}
+input::placeholder {
+  color: $color-text-third;
+}
+
+input:focus,
+textarea:focus {
+  border: 1px solid $color-primary;
+}
+::-webkit-input-placeholder,
+::-moz-placeholder,
+::-ms-input-placeholder,
+::placeholder {
+  color: $color-text-third;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+}
+button {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -ms-user-select: none;
+}
+.containerTabs {
+  width: 100%;
+  height: 3rem;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-background-light;
+  border-bottom: 1px solid $color-background-dark;
+}
+.react-tabs__tab-list {
+  width: 100%;
+  height: 100%;
+  max-width: 30rem;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  margin: 0;
+}
+.react-tabs__tab {
+  height: 100%;
+  line-height: 3rem;
+  text-decoration: none;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: $color-text-third;
+  user-select: none;
+}
+.react-tabs__tab--selected {
+  color: $color-primary;
+  border-bottom: 4px solid $color-primary;
+}
+.react-tabs__tab-panel--selected {
+  animation-name: fadein;
+  animation-duration: 100ms;
+  animation-timing-function: linear;
+}
+@media (min-width: 20rem) {
+  h2 {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 30rem) {
+  h2 {
+    font-size: 1.2rem;
+  }
+  .container {
+    margin: 12px;
+    padding: 32px;
+  }
+  .containerFlex {
+    margin: 12px 24px 24px 24px;
+  }
+}
+@media (min-width: 50rem) {
+  .containerTabs {
+    width: 30rem;
+    margin: 0 auto;
+    margin-top: -4rem;
+    background: none;
+    border: none;
+    height: 4rem;
+  }
+  .react-tabs__tab {
+    line-height: 4rem;
+  }
+}
+@media (min-width: 70rem) {
+  .containerFlex {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
