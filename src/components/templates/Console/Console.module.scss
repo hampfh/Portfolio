@@ -1,3 +1,5 @@
+@import 'src/root';
+
 .consoleWindow {
     font-family: 'Ubuntu Mono', monospace;
 
@@ -67,6 +69,11 @@
     height: 20em;
     margin: 0 auto;
     padding: 0.25rem;
+    padding-bottom: 1rem;
+
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    overscroll-behavior: contain;
 }
 
 .userPrefix {
@@ -82,4 +89,17 @@
     color: white;
 
     line-height: 1.5em;
+}
+
+.line:last-child {
+    padding-bottom: 1rem;
+}
+
+.consoleInput {
+    color: $color-text-secondary;
+    background-color: transparent;
+    border: none;
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1rem;
+    caret-color: white;
 }
