@@ -8,7 +8,7 @@ export class About extends Component {
         return (
             <section className={styles.aboutContainer}>
                 <aside className={styles.aside}>
-                    <img className={styles.portrait} src={me} />
+                    <img className={styles.portrait} src={me} alt="" />
                 </aside>
                 <article className={styles.article}>
                     <h2>About me</h2>
