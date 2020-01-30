@@ -71,6 +71,7 @@
     padding: 0.25rem;
     padding-bottom: 1rem;
 
+    overflow-x: hidden;
     overflow-y: scroll;
     scrollbar-width: thin;
     overscroll-behavior: contain;
@@ -85,7 +86,7 @@
 .line {
     margin-left: 0.5rem;
     text-align: left;
-    word-wrap: normal;
+    word-wrap: break-word;
     color: white;
 
     line-height: 1.5em;
@@ -96,6 +97,7 @@
 }
 
 .consoleInput {
+    display: inline;
     color: $color-text-secondary;
     background-color: transparent;
     border: none;
