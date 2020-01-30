@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react'
+import Interpreter from 'functions/Interpreter'
 
 import styles from './Console.module.scss'
 
@@ -9,6 +10,7 @@ export class Console extends Component<{}, StateForComponent> {
 
     currentLine: React.RefObject<HTMLInputElement>;
     bottomConsole: any;
+    interpreter: Interpreter;
     constructor(props: any) {
         super(props);
 
@@ -22,6 +24,8 @@ export class Console extends Component<{}, StateForComponent> {
             lineWasAdded: false
         }
 
+        this.interpreter = new Interpreter();
+        
         this.currentLine = createRef();
         this.bottomConsole = createRef();
 
@@ -52,8 +56,10 @@ export class Console extends Component<{}, StateForComponent> {
         this.setState(newState);
     }
 
-    output(text: string) {
-        
+    output(text: string, type: string) {
+        let newState = {...this.state};
+        newState.lines.push({ id: this.currentIndex++, type, text})
+        this.setState(newState);
     }
 
     getCurrentLine() {
@@ -104,7 +110,7 @@ export class Console extends Component<{}, StateForComponent> {
         this.setState(newState);
     }
 
-    finishLine() {
+    finishLine(): Line {
         // Execute line
         let newState = { ...this.state };
         let lines = [...newState.lines];
@@ -123,12 +129,18 @@ export class Console extends Component<{}, StateForComponent> {
         newState.cursor.active = false;
 
         this.setState(newState);
+        return this.getCurrentLine();
     }
 
     _handleKey(event: any) {        
         switch (event.key) {
             case 'Enter':
-                this.finishLine();
+                let Line = this.finishLine();
+                let result = this.interpreter.run(Line.text);
+                if (result.status !== 0)
+                    this.output(result.message as string, 'error');
+                else if (result.status === 0 && result.message !== undefined) 
+                    this.output(result.message as string, 'info');
                 this.startInputLine();
                 this.setState({ ...this.state, lineWasAdded: true });
                 break;
@@ -182,7 +194,7 @@ export class Console extends Component<{}, StateForComponent> {
                     else {
                         return (
                             <div key={line.id} className={styles.line}>
-                                <p className={styles.consoleInput}>{line.text}</p>
+                                <p className={styles.consoleInput + " " + styles[line.type]}>{line.text}</p>
                             </div>
                         )
                     }
