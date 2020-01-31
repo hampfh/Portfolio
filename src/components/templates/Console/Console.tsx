@@ -3,7 +3,17 @@ import Interpreter from 'functions/Interpreter'
 
 import styles from './Console.module.scss'
 
-export class Console extends Component<{}, StateForComponent> {
+export enum OutputMode { 
+    default = 'default', 
+    typing = 'typing'
+ }
+export enum LineType { 
+    input = 'input', 
+    info = 'info', 
+    error = 'error' 
+};
+
+export class Console extends Component<PropsForComponent, StateForComponent> {
     currentIndex = 1;
     cursorOnTime = 600;
     cursorOffTime = 500;
@@ -11,7 +21,7 @@ export class Console extends Component<{}, StateForComponent> {
     currentLine: React.RefObject<HTMLInputElement>;
     bottomConsole: any;
     interpreter: Interpreter;
-    constructor(props: any) {
+    constructor(props: PropsForComponent) {
         super(props);
 
         this.state = {
@@ -47,17 +57,58 @@ export class Console extends Component<{}, StateForComponent> {
 
     async componentDidMount() {
         let newState = { ...this.state };
-        if (this.state.lines.length <= 0)
-            newState.lines.push({ id: this.currentIndex++, type: "input", text: "" });
 
-        // Only set interval on initial page load
-        if (newState.cursor.interval === null)
-            this.toggleCursor();
+        if (this.props.onLoadMessage !== undefined) {
+            let batch = this.props.onLoadMessage;
+            for (let i = 0; i < batch.length; i++) {
+                let lines = this.props.onLoadMessage[i];
+                await this.output(lines.text, lines.type, lines.mode);
+            }
+        }
+        if (this.props.interactive !== undefined && this.props.interactive === true) {
+            this.startInputLine();
+
+            // Only set interval on initial page load
+            if (newState.cursor.interval === null)
+                this.toggleCursor();   
+        }
 
         this.setState(newState);
     }
 
-    typeRecursive(index: number | Index, data: string | Array<string>) {
+    typeRecursive(index: number | Index, data: string | Array<string>, type: LineType = LineType.info) {
+        const DefaultDelays = {
+            char: 40,
+            space: 15,
+            newLine: 150,
+            loadingChar: 500
+        }
+
+        // Get next char
+        let nextChar: string = "";
+        if (Array.isArray(data) && typeof index !== 'number') {
+            if (index.innerIndex >= data[index.outerIndex].length)
+                nextChar = "\n";
+            else
+                nextChar = (data[index.outerIndex][index.innerIndex]);
+        }
+        else
+            nextChar = (data[index as number]);
+
+        // Calculate the current delay
+        let thisDelay = DefaultDelays.char;
+        switch (nextChar) {
+            case ' ':
+                thisDelay = DefaultDelays.space;
+                break;
+            case '\n':
+                thisDelay = DefaultDelays.newLine;
+                break;
+            case '■':
+                thisDelay = DefaultDelays.loadingChar;
+                break;
+        }
+        
         return new Promise(resolve => {
             // Multiple lines
             if (Array.isArray(data)) {
@@ -65,58 +116,70 @@ export class Console extends Component<{}, StateForComponent> {
                     index = index as Index;
 
                     if (index.innerIndex < data[index.outerIndex].length) {
-                        this.addCharToCurrentLine(data[index.outerIndex][index.innerIndex], 'response');
+                        this.addCharToCurrentLine(data[index.outerIndex][index.innerIndex], type);
                         index.innerIndex++;
                     } else {
                         index.innerIndex = 0;
                         index.outerIndex++;
-                        this.finishLine();
-                        this.output();
+                        // Don't create newline on last line
+                        if (index.outerIndex < data.length) {
+                            this.finishLine();
+                            this.output("", type);
+                        }
                     }
 
                     if (index.outerIndex < data.length) 
-                        await this.typeRecursive(index, data);
+                        await this.typeRecursive(index, data, type);
 
                     resolve();
-                }, 100);
+                }, thisDelay);
             } else { // Only one line
-                setTimeout(() => {
+                setTimeout(async () => {
                     index = index as number;
 
                     if (data[index] !== undefined)
-                        this.addCharToCurrentLine(data[index], 'response');
-                    if (index < data.length) {
-                        this.typeRecursive(++index, data);
-                    } else {
+                        this.addCharToCurrentLine(data[index], type);
+                    if (index < data.length)
+                        await this.typeRecursive(++index, data, type);
+                     
+                    // Only the first instance of the recursion will create a newline
+                    if (index === 0) {
                         this.finishLine();
-                        this.startInputLine();
-                        resolve();
+                        this.output("", type);
                     }
-                }, 10);
+                    resolve();
+                }, thisDelay);
             }
         })
     }
 
-    output(text: string | Array<string> = "", type: string = 'info', method: string = 'default') {
+    output(text: string | Array<string> = "", type: LineType = LineType.info, method: OutputMode = OutputMode.default) {
         return new Promise(async resolve => {
             let newState = { ...this.state };
             // Create new empty line
-            if (text.length === 0)
+            if (typeof text === 'string' && text.length === 0 && newState.lines[newState.lines.length - 1].text.length > 0)
                 newState.lines.push({ id: this.currentIndex++, type, text: "" })
 
-            if (method === 'default') {
+            // Default output method
+            else if (method === OutputMode.default) {
+                console.log(text)
                 if (Array.isArray(text)) {
                     for (let i = 0; i < text.length; i++) {
                         newState.lines.push({ id: this.currentIndex++, type, text: text[i] })
                     }
-                } else
+                } else {
                     newState.lines.push({ id: this.currentIndex++, type, text });
-            } else if (method === 'typing') {
+                }
+            } 
+            
+            // Typing output method
+            else if (method === OutputMode.typing) {
                 this.finishLine();
                 // Add new empty line
                 newState.lines.push({ id: this.currentIndex++, type, text: ""});
-                await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text);
+                await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text, type);
             }
+            newState.lineWasAdded = true;
             this.setState(newState);
 
             resolve();
@@ -143,7 +206,7 @@ export class Console extends Component<{}, StateForComponent> {
         this.setState(newState);
     }
 
-    addCharToCurrentLine(char: string, type: string = 'input') {
+    addCharToCurrentLine(char: string, type: LineType = LineType.info) {
         let newState = { ...this.state };
         if (newState.lines.length <= 0)
             newState.lines.push({ id: this.currentIndex++, type, text: char});
@@ -166,8 +229,9 @@ export class Console extends Component<{}, StateForComponent> {
         // Reset cursor
         newState.cursor.active = false;
         // Add a new empty line
-        newState.lines.push({ id: this.currentIndex++, type: "input", text: "" });
+        newState.lines.push({ id: this.currentIndex++, type: LineType.input, text: "" });
         this.toggleCursor();
+        newState.lineWasAdded = true;
         this.setState(newState);
     }
 
@@ -184,6 +248,10 @@ export class Console extends Component<{}, StateForComponent> {
             lines.push(currentLine);
         }
 
+        // If current line is empty, add dummy character to it
+        if (newState.lines.length > 0 && newState.lines[newState.lines.length - 1].text.length <= 0)
+            newState.lines[newState.lines.length - 1].text = "";
+
         clearInterval(newState.cursor.interval as NodeJS.Timeout);
 
         // Reset cursor
@@ -199,9 +267,9 @@ export class Console extends Component<{}, StateForComponent> {
                 let Line = this.finishLine();
                 let result = this.interpreter.run(Line.text);
                 if (result.status !== 0)
-                    await this.output(result.message as string, 'error');
+                    await this.output(result.message as string, LineType.error);
                 else if (result.status === 0 && result.message !== undefined)
-                    await this.output([ "hello", "there"], 'info', 'typing');
+                    await this.output(result.message, LineType.info);
                 this.startInputLine();
                 this.setState({ ...this.state, lineWasAdded: true });
                 break;
@@ -244,7 +312,8 @@ export class Console extends Component<{}, StateForComponent> {
         return (
             <section className={styles.console} tabIndex={0} onKeyDown={this._handleKeyCode} onKeyPress={this._handleKey}>
                 {this.state.lines.map(line => {
-                    if (line.type === 'input') {
+
+                    if (line.type === LineType.input) {
                         return (
                             <div key={line.id} className={styles.line}>
                                 <span className={styles.userPrefix}>server@user:~$</span>
@@ -274,8 +343,19 @@ interface Index {
 
 interface Line {
     id: number,
-    type: string,
+    type: LineType,
     text: string
+}
+
+export interface OutputLine {
+    type: LineType,
+    mode: OutputMode,
+    text: Array<string>
+}
+
+interface PropsForComponent {
+    onLoadMessage?: Array<OutputLine>
+    interactive?: boolean
 }
 
 interface StateForComponent {
