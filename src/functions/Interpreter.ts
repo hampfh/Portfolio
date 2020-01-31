@@ -1,6 +1,6 @@
 interface ReturnType {
     status: number,
-    message?: string,
+    message?: string | Array<string>,
     result?: any
 }
 
@@ -12,11 +12,11 @@ interface CommandArg {
 interface CatalogeItem {
     command: string,
     arguments: Array<CommandArg>,
-    out: string | Function
+    out: string | Array<string> | Function
 }
 
 const cataloge: Array<CatalogeItem> = [
-    { command: 'help', arguments: [], out: 'This is the list of all commands'}
+    { command: 'help', arguments: [], out: ['This is the list of all commands', 'hello', 'yeay']}
 ]
 
 export default class Interpreter {
@@ -42,7 +42,7 @@ export default class Interpreter {
         if (result.result.length - 1 > command.arguments.length)
             return { status: 1, message: "Unmatched arguments" };
 
-        if (typeof command.out === 'string')
+        if (typeof command.out === 'string' || (Array.isArray(command.out) && typeof command.out[0] === 'string'))
             return { status: 0, message: command.out };
         else
             return { status: 0, result: command.out };

@@ -56,9 +56,18 @@ export class Console extends Component<{}, StateForComponent> {
         this.setState(newState);
     }
 
-    output(text: string, type: string) {
+    output(text: string | Array<string>, type: string, method: string = 'default') {
         let newState = {...this.state};
-        newState.lines.push({ id: this.currentIndex++, type, text})
+        if (method === 'default') {
+            if (Array.isArray(text)) {
+                for (let i = 0; i < text.length; i++) {
+                    newState.lines.push({ id: this.currentIndex++, type, text: text[i] })
+                }
+            } else
+                newState.lines.push({ id: this.currentIndex++, type, text })
+        } else if (method === 'typing') {
+
+        }
         this.setState(newState);
     }
 
@@ -137,6 +146,7 @@ export class Console extends Component<{}, StateForComponent> {
             case 'Enter':
                 let Line = this.finishLine();
                 let result = this.interpreter.run(Line.text);
+                console.log(result.message)
                 if (result.status !== 0)
                     this.output(result.message as string, 'error');
                 else if (result.status === 0 && result.message !== undefined) 
