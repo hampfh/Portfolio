@@ -2,16 +2,9 @@ import React, { Component, createRef } from 'react'
 import Interpreter from 'functions/Interpreter'
 
 import styles from './Console.module.scss'
-
-export enum OutputMode { 
-    default = 'default', 
-    typing = 'typing'
- }
-export enum LineType { 
-    input = 'input', 
-    info = 'info', 
-    error = 'error' 
-};
+import { Line, LineType, OutputMode, State as StateForComponent } from 'state/reducers/console'
+import { connect } from 'react-redux'
+import { setAll } from 'state/actions/console'
 
 export class Console extends Component<PropsForComponent, StateForComponent> {
     currentIndex = 1;
@@ -23,16 +16,6 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
     interpreter: Interpreter;
     constructor(props: PropsForComponent) {
         super(props);
-
-        this.state = {
-            cursor: {
-                active: false,
-                char: "█",
-                interval: null,
-            },
-            lines: [],
-            lineWasAdded: false
-        }
 
         this.interpreter = new Interpreter();
         
@@ -49,14 +32,13 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
     }
 
     async componentDidUpdate() {
-        if (this.state.lineWasAdded) {
+        if (this.props.console.lineWasAdded) {
             this.bottomConsole.scrollIntoView({ behavior: "smooth", block: "end" });
-            this.setState({ ...this.state, lineWasAdded: false });
+            this.props.setAll({ ...this.props.console, lineWasAdded: false })
         }
     }
 
     async componentDidMount() {
-        let newState = { ...this.state };
 
         if (this.props.onLoadMessage !== undefined) {
             let batch = this.props.onLoadMessage;
@@ -69,11 +51,9 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             this.startInputLine();
 
             // Only set interval on initial page load
-            if (newState.cursor.interval === null)
+            if (this.props.console.cursor.interval === null)
                 this.toggleCursor();   
         }
-
-        this.setState(newState);
     }
 
     typeRecursive(index: number | Index, data: string | Array<string>, type: LineType = LineType.info) {
@@ -155,7 +135,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 
     output(text: string | Array<string> = "", type: LineType = LineType.info, method: OutputMode = OutputMode.default) {
         return new Promise(async resolve => {
-            let newState = { ...this.state };
+            let newState = { ...this.props.console };
             // Create new empty line
             if (typeof text === 'string' && text.length === 0 && newState.lines[newState.lines.length - 1].text.length > 0)
                 newState.lines.push({ id: this.currentIndex++, type, text: "" })
@@ -180,68 +160,68 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                 await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text, type);
             }
             newState.lineWasAdded = true;
-            this.setState(newState);
+            this.props.setAll(newState);
 
             resolve();
         });
     }
 
     getCurrentLine() {
-        return this.state.lines[this.state.lines.length - 1];
+        return this.props.console.lines[this.props.console.lines.length - 1];
     }
 
     removeLastCharFromCurrentLine() {
-        let newState = { ...this.state };
+        let newState = {...this.props.console};
         let targetLine = this.getCurrentLine();
         if (targetLine === undefined || targetLine.text.length <= 0)
             return;
 
-        if (this.state.cursor.active) {
+        if (this.props.console.cursor.active) {
             targetLine.text = targetLine.text.substr(0, targetLine.text.length - 2);
-            targetLine.text += this.state.cursor.char;
+            targetLine.text += this.props.console.cursor.char;
         } else {
             targetLine.text = targetLine.text.substr(0, targetLine.text.length - 1);
         }
         newState.lines[newState.lines.length - 1] = targetLine;
-        this.setState(newState);
+        this.props.setAll(newState);
     }
 
     addCharToCurrentLine(char: string, type: LineType = LineType.info) {
-        let newState = { ...this.state };
+        let newState = { ...this.props.console };
         if (newState.lines.length <= 0)
             newState.lines.push({ id: this.currentIndex++, type, text: char});
         else {
             if (newState.cursor.active) {
                 let newLine = newState.lines[newState.lines.length - 1].text.substr(0, newState.lines[newState.lines.length - 1].text.length - 1);
                 newLine += char;
-                newLine += this.state.cursor.char;
+                newLine += this.props.console.cursor.char;
                 newState.lines[newState.lines.length - 1].text = newLine;
             } else {
                 newState.lines[newState.lines.length - 1].text += char;
             }
         }
-        this.setState(newState);
+        this.props.setAll(newState);
     }
 
     startInputLine() {
         // Execute line
-        let newState = { ...this.state };
+        let newState = { ...this.props.console };
         // Reset cursor
         newState.cursor.active = false;
         // Add a new empty line
         newState.lines.push({ id: this.currentIndex++, type: LineType.input, text: "" });
         this.toggleCursor();
         newState.lineWasAdded = true;
-        this.setState(newState);
+        this.props.setAll(newState);
     }
 
     finishLine(): Line {
         // Execute line
-        let newState = { ...this.state };
+        let newState = { ...this.props.console };
         let lines = [...newState.lines];
 
         // Remove cursor if it is active
-        if (this.state.cursor.active) {
+        if (this.props.console.cursor.active) {
             let currentLine = this.getCurrentLine();
             lines.pop();
             currentLine.text = currentLine.text.substr(0, currentLine.text.length - 1);
@@ -257,21 +237,22 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
         // Reset cursor
         newState.cursor.active = false;
 
-        this.setState(newState);
+        this.props.setAll(newState);
         return this.getCurrentLine();
     }
 
     async _handleKey(event: any) {        
+        let newEvent = { ...this.props.console };
         switch (event.key) {
             case 'Enter':
                 let Line = this.finishLine();
-                let result = this.interpreter.run(Line.text);
+                let result = await this.interpreter.run(Line.text, newEvent);
                 if (result.status !== 0)
                     await this.output(result.message as string, LineType.error);
                 else if (result.status === 0 && result.message !== undefined)
                     await this.output(result.message, LineType.info);
                 this.startInputLine();
-                this.setState({ ...this.state, lineWasAdded: true });
+                this.props.setAll({ ...this.props.console, lineWasAdded: true });
                 break;
             case ' ':
                 event.preventDefault();
@@ -280,6 +261,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             default:
                 this.addCharToCurrentLine(event.key);
         }
+        this.props.setAll(newEvent);
     }
 
     _handleKeyCode(event: any) {
@@ -290,7 +272,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
     }
 
     toggleCursor() {
-        let newState = {...this.state};
+        let newState = {...this.props.console };
         if (newState.cursor.active) {
             let targetLine = this.getCurrentLine();
             if (targetLine === undefined || targetLine.text.length <= 0)
@@ -301,17 +283,17 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             newState.cursor.active = false;
             newState.cursor.interval = setTimeout(this.toggleCursor, this.cursorOffTime);
         } else {
-            this.addCharToCurrentLine(this.state.cursor.char);
+            this.addCharToCurrentLine(this.props.console.cursor.char);
             newState.cursor.active = true;
             newState.cursor.interval = setTimeout(this.toggleCursor, this.cursorOnTime);
         }
-        this.setState(newState);
+        this.props.setAll(newState);
     }
 
     render() {
         return (
             <section className={styles.console} tabIndex={0} onKeyDown={this._handleKeyCode} onKeyPress={this._handleKey}>
-                {this.state.lines.map(line => {
+                {this.props.console.lines.map(line => {
 
                     if (line.type === LineType.input) {
                         return (
@@ -341,12 +323,6 @@ interface Index {
     innerIndex: number 
 }
 
-interface Line {
-    id: number,
-    type: LineType,
-    text: string
-}
-
 export interface OutputLine {
     type: LineType,
     mode: OutputMode,
@@ -355,17 +331,23 @@ export interface OutputLine {
 
 interface PropsForComponent {
     onLoadMessage?: Array<OutputLine>
-    interactive?: boolean
+    interactive?: boolean,
+    console: StateForComponent,
+    setWindowVisibility: Function,
+    setAll: Function
 }
 
-interface StateForComponent {
-    cursor: {
-        active: boolean,
-        char: string,
-        interval: NodeJS.Timeout | null
-    },
-    lines: Array<Line>,
-    lineWasAdded: boolean
+const reduxSelect = (state: any) => {
+    return {
+        console: state.console
+    }
 }
 
-export default Console
+const reduxDispatch = () => {
+    return {
+        setAll,
+        setWindowVisibility: Function
+    }
+}
+
+export default connect(reduxSelect, reduxDispatch())(Console);

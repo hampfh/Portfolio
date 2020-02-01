@@ -1,3 +1,6 @@
+import ExitConsole from 'functions/commands/ExitConsole'
+import { State as ConsoleState } from 'state/reducers/console'
+
 interface ReturnType {
     status: number,
     message?: string | Array<string>,
@@ -16,37 +19,51 @@ interface CatalogeItem {
 }
 
 const cataloge: Array<CatalogeItem> = [
-    { command: 'help', arguments: [], out: ['This is the list of all commands', 'hello', 'yeay']}
+    { command: 'exit', arguments: [], out: ExitConsole }
 ]
 
 export default class Interpreter {
 
-    run(line: string): ReturnType {
-        let result = this.tokenize(line);
-        // If token problem, return syntax message
-        if (result.status !== 0)
-            return result;
-
-        // Find command
-        let command: CatalogeItem | null = null;
-        for (let i = 0; i < cataloge.length; i++) {
-            if (result.result[0] === cataloge[i].command) {
-                command = cataloge[i];
-                break;
+    run(line: string, state: ConsoleState): Promise<ReturnType> {
+        return new Promise(resolve => {
+            let result = this.tokenize(line);
+            // If token problem, return syntax message
+            if (result.status !== 0) {
+                resolve(result)
+                return;
             }
-        }
 
-        if (command === null)
-            return { status: 1, message: "Command not recognized" }
+            // Find command
+            let command: CatalogeItem | null = null;
+            for (let i = 0; i < cataloge.length; i++) {
+                if (result.result[0] === cataloge[i].command) {
+                    command = cataloge[i];
+                    break;
+                }
+            }
 
-        if (result.result.length - 1 > command.arguments.length)
-            return { status: 1, message: "Unmatched arguments" };
+            if (command === null) {
+                resolve({ status: 1, message: "Command not recognized" });
+                return;
+            }
 
-        if (typeof command.out === 'string' || (Array.isArray(command.out) && typeof command.out[0] === 'string'))
-            return { status: 0, message: command.out };
-        else
-            return { status: 0, result: command.out };
-        
+            // Invalid or too many arguments
+            if (result.result.length - 1 > command.arguments.length) {
+                resolve({ status: 1, message: "Unmatched arguments" });
+                return;
+            }
+
+            // Check return type of out
+            if (typeof command.out === 'string' || (Array.isArray(command.out) && typeof command.out[0] === 'string'))
+                resolve({ status: 0, message: command.out });
+            else {
+                // Execute out command
+                if (typeof command.out === 'function')
+                    resolve(command.out(state));
+                else
+                    resolve({ status: 1, message: "Error: Output type was not recognized" });
+            }
+        });
     }
 
     tokenize(line: string): ReturnType {
