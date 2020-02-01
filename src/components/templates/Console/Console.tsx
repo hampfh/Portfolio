@@ -311,7 +311,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                         )
                     }
                 })}
-                <div ref={(element) => this.bottomConsole = element}>
+                <div className={styles.bottomDiv} ref={(element) => this.bottomConsole = element}>
                 </div> 
             </section>
         )

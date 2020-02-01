@@ -1,4 +1,5 @@
 import ExitConsole from 'functions/commands/ExitConsole'
+import Help from 'functions/commands/Help'
 import { State as ConsoleState } from 'state/reducers/console'
 
 interface ReturnType {
@@ -19,6 +20,7 @@ interface CatalogeItem {
 }
 
 const cataloge: Array<CatalogeItem> = [
+    { command: 'help', arguments: [], out: Help },
     { command: 'exit', arguments: [], out: ExitConsole }
 ]
 
