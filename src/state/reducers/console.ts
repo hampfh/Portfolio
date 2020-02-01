@@ -48,6 +48,9 @@ const console = (state: State = defaultState, action: ActionType) => {
         case 'SET_ALL': 
             newState = action.payload;
             return newState;
+        case 'WINDOW_VISIBLE':
+            newState.window.visible = action.payload.visible;
+            return newState;
         default:
             return newState;
     }

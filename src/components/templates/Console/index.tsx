@@ -24,7 +24,7 @@ export class ConsoleWindow extends Component<PropsForComponent, ConsoleState> {
                             text: [ "fetch webpage" ]
                         },
                         { 
-                            type: LineType.info, mode: OutputMode.typing,
+                            type: LineType.info, mode: OutputMode.default,
                             text: [
                                 "Detecting visitor!",
                                 "Polishing shoes...",

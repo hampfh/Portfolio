@@ -5,7 +5,8 @@ import { State as ConsoleState } from 'state/reducers/console'
 interface ReturnType {
     status: number,
     message?: string | Array<string>,
-    result?: any
+    result?: any,
+    state?: ConsoleState
 }
 
 interface CommandArg {
@@ -61,7 +62,7 @@ export default class Interpreter {
             else {
                 // Execute out command
                 if (typeof command.out === 'function')
-                    resolve(command.out(state));
+                    resolve({ status: 0, state: command.out(state)});
                 else
                     resolve({ status: 1, message: "Error: Output type was not recognized" });
             }

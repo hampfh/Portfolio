@@ -6,3 +6,12 @@ export const setAll = (payload: State) => {
         payload: payload
     }
 }
+
+export const setWindowVisibility = (visible: boolean) => {
+    return {
+        type: "WINDOW_VISIBLE",
+        payload: {
+            visible
+        }
+    }
+}

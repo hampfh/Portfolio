@@ -4,7 +4,7 @@ import Interpreter from 'functions/Interpreter'
 import styles from './Console.module.scss'
 import { Line, LineType, OutputMode, State as StateForComponent } from 'state/reducers/console'
 import { connect } from 'react-redux'
-import { setAll } from 'state/actions/console'
+import { setAll, setWindowVisibility } from 'state/actions/console'
 
 export class Console extends Component<PropsForComponent, StateForComponent> {
     currentIndex = 1;
@@ -247,6 +247,10 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             case 'Enter':
                 let Line = this.finishLine();
                 let result = await this.interpreter.run(Line.text, newEvent);
+
+                if (result.state !== undefined)
+                    this.props.setAll(result.state);
+
                 if (result.status !== 0)
                     await this.output(result.message as string, LineType.error);
                 else if (result.status === 0 && result.message !== undefined)
@@ -346,7 +350,7 @@ const reduxSelect = (state: any) => {
 const reduxDispatch = () => {
     return {
         setAll,
-        setWindowVisibility: Function
+        setWindowVisibility
     }
 }
 
