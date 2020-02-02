@@ -1,6 +1,8 @@
+import { State as ConsoleState } from 'state/reducers/console'
+
+import ClearConsole from 'functions/commands/ClearConsole'
 import ExitConsole from 'functions/commands/ExitConsole'
 import Help from 'functions/commands/Help'
-import { State as ConsoleState } from 'state/reducers/console'
 
 interface ReturnType {
     status: number,
@@ -22,7 +24,8 @@ interface CatalogeItem {
 
 const cataloge: Array<CatalogeItem> = [
     { command: 'help', arguments: [], out: Help },
-    { command: 'exit', arguments: [], out: ExitConsole }
+    { command: 'exit', arguments: [], out: ExitConsole },
+    { command: 'clear', arguments: [], out: ClearConsole }
 ]
 
 export default class Interpreter {
