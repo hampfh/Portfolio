@@ -7,7 +7,7 @@ export const setAll = (payload: State) => {
     }
 }
 
-export const setWindowVisibility = (visible: boolean) => {
+export const windowVisible = (visible: boolean = true) => {
     return {
         type: "WINDOW_VISIBLE",
         payload: {

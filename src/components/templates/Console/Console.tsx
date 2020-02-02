@@ -4,7 +4,7 @@ import Interpreter from 'functions/Interpreter'
 import styles from './Console.module.scss'
 import { Line, LineType, OutputMode, State as StateForComponent } from 'state/reducers/console'
 import { connect } from 'react-redux'
-import { setAll, setWindowVisibility } from 'state/actions/console'
+import { setAll, windowVisible } from 'state/actions/console'
 
 export class Console extends Component<PropsForComponent, StateForComponent> {
     currentIndex = 1;
@@ -142,7 +142,6 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 
             // Default output method
             else if (method === OutputMode.default) {
-                console.log(text)
                 if (Array.isArray(text)) {
                     for (let i = 0; i < text.length; i++) {
                         newState.lines.push({ id: this.currentIndex++, type, text: text[i] })
@@ -337,7 +336,7 @@ interface PropsForComponent {
     onLoadMessage?: Array<OutputLine>
     interactive?: boolean,
     console: StateForComponent,
-    setWindowVisibility: Function,
+    windowVisible: Function,
     setAll: Function
 }
 
@@ -350,7 +349,7 @@ const reduxSelect = (state: any) => {
 const reduxDispatch = () => {
     return {
         setAll,
-        setWindowVisibility
+        windowVisible
     }
 }
 

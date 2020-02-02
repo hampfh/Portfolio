@@ -44,7 +44,14 @@
     font-weight: 500;
 }
 .toolbarButton:nth-child(1) {
+    cursor: pointer;
     margin-left: 0.5em;
+}
+.toolbarButton:nth-child(1):hover {
+    background: $color-error;
+}
+.toolbarButton:nth-child(1):active {
+    transform: scale(0.9);
 }
 .toolbarButton:not(:nth-child(1)) {
     background-image: linear-gradient(to bottom, #888888, #7f7f7f, #777777, #6e6e6e, #666666);
