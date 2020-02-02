@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 import { CSSTransition } from 'react-transition-group'
 import styles from './Console.module.scss'
-import transitionStyle from './ConsoleTransitionStyle.module.scss'
+import transitionStyle from './ConsoleTransitions.module.scss'
 
 export class ConsoleWindow extends Component<PropsForComponent, ConsoleState> {
 
