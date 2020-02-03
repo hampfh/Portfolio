@@ -3,16 +3,17 @@
 .consoleWindow {
     font-family: 'Ubuntu Mono', monospace;
 
-    --terminalHeight: 2em;
+    --terminalHeight: 32px;
 
-    width: 40rem;
-    height: fit-content;
-    max-width: 40em;
+    position: relative;
 
     border-radius: .3em;
 
     -webkit-box-shadow: 0 5px 5px 0 rgba(154,160,185,.5), 0 5px 30px 0 rgba(166,173,201,1);
     box-shadow: 0 5px 5px 0 rgba(154,160,185,.5), 0 5px 30px 0 rgba(166,173,201,1);
+    overflow: hidden;
+
+    z-index: 1000;
 }
 
 .toolbar {
@@ -28,6 +29,7 @@
 
     width: 100%;
 
+    position: relative;
     display: flex;
 }
 
@@ -57,6 +59,16 @@
     background-image: linear-gradient(to bottom, #888888, #7f7f7f, #777777, #6e6e6e, #666666);
 }
 
+.draggable {
+    overflow: hidden;
+    display: block;
+    position: absolute;
+
+    cursor: move;
+
+    z-index: 1001;
+}
+
 .currentUser {
     display: inline-block;
     color: white;
@@ -73,7 +85,7 @@
     border-bottom-left-radius: .3em;
     border-bottom-right-radius: .3em;
 
-    height: 20em;
+    height: calc(100% - var(--terminalHeight));
     margin: 0 auto;
     padding: 0.25rem;
     padding-bottom: 1rem;

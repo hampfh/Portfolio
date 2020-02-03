@@ -1,17 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 
 import { connect } from 'react-redux'
 import { State as ConsoleState } from 'state/reducers/console'
-import { windowVisible } from 'state/actions/console'
+import { windowVisible, setPosition, setInitialPosition, moving } from 'state/actions/console'
 
 import styles from './Console.module.scss'
 
-export class Toolbar extends Component<PropsForComponent> {
+export class Toolbar extends Component<PropsForComponent, StateForComponent> {
+    exitBtn: React.RefObject<unknown>
 
     constructor(props: PropsForComponent) {
         super(props)
+
+        this.state = {
+            isMoving: false
+        }
+
+        this.exitBtn = createRef();
     
         this._handleExitClick = this._handleExitClick.bind(this);
+        this._handleMoveStart = this._handleMoveStart.bind(this);
     }
     
 
@@ -19,11 +27,30 @@ export class Toolbar extends Component<PropsForComponent> {
         this.props.windowVisible(false);
     }
 
+    _handleMoveStart(event: React.MouseEvent<HTMLElement, MouseEvent>) {
+        if (event.target === this.exitBtn.current || !!!this.props.console.transform.isEjected)
+            return;
+
+        this.props.moving(true);
+
+        const transform = this.props.console.transform;
+
+        if (transform.initial.x === 0 && transform.initial.y === 0)
+            this.props.setInitialPosition(event.pageX, event.pageY);
+        else {
+            const offsetX = (event.pageX - transform.initial.x) - transform.x;
+            const offsetY = (event.pageY - transform.initial.y) - transform.y;
+            this.props.setInitialPosition(transform.initial.x + offsetX, transform.initial.y + offsetY)
+        }
+    }
+
     render() {
         return (
-            <header className={styles.toolbar}>
+            <header className={styles.toolbar} 
+                onMouseDown={this._handleMoveStart} 
+            >
                 <nav className={styles.toolbarButtonContainer}>
-                    <span className={"exit " + styles.toolbarButton} onClick={this._handleExitClick}></span>
+                    <span ref={this.exitBtn as React.RefObject<any>} className={"exit " + styles.toolbarButton} onClick={this._handleExitClick}></span>
                     <span className={"minimize " + styles.toolbarButton}></span>
                     <span className={"maximize " + styles.toolbarButton}></span>
                 </nav>
@@ -33,9 +60,16 @@ export class Toolbar extends Component<PropsForComponent> {
     }
 }
 
+interface StateForComponent {
+    isMoving: boolean
+}
+
 interface PropsForComponent {
     console: ConsoleState
-    windowVisible: Function
+    windowVisible: Function,
+    setPosition: Function, 
+    setInitialPosition: Function,
+    moving: Function
 }
 
 const reduxSelect = (state: any) => {
@@ -46,7 +80,10 @@ const reduxSelect = (state: any) => {
 
 const reduxDispatch = () => {
     return {
-        windowVisible
+        windowVisible,
+        setPosition, 
+        setInitialPosition,
+        moving
     }
 }
 

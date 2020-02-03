@@ -17,6 +17,18 @@ export interface Line {
 }
 
 export interface State {
+    transform: {
+        isEjected: boolean,
+        isMoving: boolean,
+        initial: {
+            x: number,
+            y: number
+        },
+        x: number,
+        y: number
+        width: number,
+        height: number
+    }
     window: {
         visible: boolean
     },
@@ -31,6 +43,18 @@ export interface State {
 }
 
 const defaultState = {
+    transform: {
+        isEjected: false,
+        isMoving: false,
+        initial: {
+            x: 0,
+            y: 0
+        },
+        x: 0,
+        y: 0,
+        width: 640,
+        height: 350
+    },
     window: {
         visible: true
     },
@@ -52,6 +76,22 @@ const console = (state: State = defaultState, action: ActionType) => {
             return newState;
         case 'WINDOW_VISIBLE':
             newState.window.visible = action.payload.visible;
+            return newState;
+        case 'SET_INITIAL_POSITION': {
+            newState.transform.initial.x = action.payload.x;
+            newState.transform.initial.y = action.payload.y;
+            return newState;
+        }
+        case 'SET_POSITION':
+            newState.transform.x = action.payload.x;
+            newState.transform.y = action.payload.y;
+            return newState;
+        case 'SET_DIMENSION':
+            newState.transform.width = action.payload.width;
+            newState.transform.height = action.payload.height;
+            return newState;
+        case 'SET_MOVING':
+            newState.transform.isMoving = action.payload.isMoving;
             return newState;
         default:
             return newState;

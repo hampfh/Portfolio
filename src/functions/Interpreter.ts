@@ -3,11 +3,11 @@ import { State as ConsoleState } from 'state/reducers/console'
 import ClearConsole from 'functions/commands/ClearConsole'
 import ExitConsole from 'functions/commands/ExitConsole'
 import Help from 'functions/commands/Help'
+import EjectConsole from 'functions/commands/EjectConsole'
 
-interface ReturnType {
-    status: number,
+export interface ReturnType {
+    status?: number,
     message?: string | Array<string>,
-    result?: any,
     state?: ConsoleState
 }
 
@@ -19,13 +19,14 @@ interface CommandArg {
 interface CatalogeItem {
     command: string,
     arguments: Array<CommandArg>,
-    out: string | Array<string> | Function
+    out: Function
 }
 
 const cataloge: Array<CatalogeItem> = [
     { command: 'help', arguments: [], out: Help },
     { command: 'exit', arguments: [], out: ExitConsole },
-    { command: 'clear', arguments: [], out: ClearConsole }
+    { command: 'clear', arguments: [], out: ClearConsole },
+    { command: 'eject', arguments: [], out: EjectConsole },
 ]
 
 export default class Interpreter {
@@ -60,19 +61,11 @@ export default class Interpreter {
             }
 
             // Check return type of out
-            if (typeof command.out === 'string' || (Array.isArray(command.out) && typeof command.out[0] === 'string'))
-                resolve({ status: 0, message: command.out });
-            else {
-                // Execute out command
-                if (typeof command.out === 'function')
-                    resolve({ status: 0, state: command.out(state)});
-                else
-                    resolve({ status: 1, message: "Error: Output type was not recognized" });
-            }
+            resolve({ ...command.out(state) });
         });
     }
 
-    tokenize(line: string): ReturnType {
+    tokenize(line: string): { status: number, message?: string, result?: any} {
         let tokens = line.split(" ");
         for (let i = 0; i < tokens.length; i++) {
             let token = tokens[i];
