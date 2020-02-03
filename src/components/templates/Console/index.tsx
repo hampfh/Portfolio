@@ -8,9 +8,7 @@ import { State as ConsoleState } from 'state/reducers/console'
 import { moving, setPosition } from 'state/actions/console'
 import { connect } from 'react-redux'
 
-import { CSSTransition } from 'react-transition-group'
 import styles from './Console.module.scss'
-import transitionStyle from './ConsoleTransitions.module.scss'
 
 export class ConsoleWindow extends Component<PropsForComponent, ConsoleState> {
 
@@ -39,14 +37,12 @@ export class ConsoleWindow extends Component<PropsForComponent, ConsoleState> {
     }
 
     render() {
-        const animationDuration = 150;
 
         const windowStyles = {
             width: `${this.props.console.transform.width}px`,
             height: `${this.props.console.transform.height}px`,
             top: `${this.props.console.transform.y}px`,
             left: `${this.props.console.transform.x}px`,
-            transition: `transform ${animationDuration}ms`
         }
 
         return (
@@ -64,34 +60,31 @@ export class ConsoleWindow extends Component<PropsForComponent, ConsoleState> {
                         }}
                     />
                 }
-                <CSSTransition in={this.props.console.window.visible} classNames={{ ...transitionStyle }} unmountOnExit timeout={animationDuration} 
-                    style={windowStyles}
-                >
-                    <section className={styles.consoleWindow}>
-                        <Toolbar />
-                        <Console interactive={true} onLoadMessage={[
-                                { 
-                                    type: LineType.input, mode: OutputMode.typing, 
-                                    text: [ "fetch webpage" ]
-                                },
-                                { 
-                                    type: LineType.info, mode: OutputMode.default,
-                                    text: [
-                                        "Detecting visitor!",
-                                        "Polishing shoes...",
-                                        "Double check backslick...",
-                                        "Ironing clothes...",
-                                        "Straightening tie...",
-                                        "Double check backslick...",
-                                        "■■■■■■■■■■ Done!",
-                                        "Hello there dear visitor!",
-                                        "Welcome to the page :D"
-                                    ]
-                                }
-                            ]} 
-                        />
-                    </section>
-                </CSSTransition>
+                
+                <section className={styles.consoleWindow} style={windowStyles}>
+                    <Toolbar />
+                    <Console interactive={true} onLoadMessage={[
+                            { 
+                                type: LineType.input, mode: OutputMode.typing, 
+                                text: [ "fetch webpage" ]
+                            },
+                            { 
+                                type: LineType.info, mode: OutputMode.default,
+                                text: [
+                                    "Detecting visitor!",
+                                    "Polishing shoes...",
+                                    "Double check backslick...",
+                                    "Ironing clothes...",
+                                    "Straightening tie...",
+                                    "Double check backslick...",
+                                    "■■■■■■■■■■ Done!",
+                                    "Hello there dear visitor!",
+                                    "Welcome to the page :D"
+                                ]
+                            }
+                        ]} 
+                    />
+                </section>
             </>
         )
     }
