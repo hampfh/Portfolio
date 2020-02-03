@@ -1,0 +1,111 @@
+@import 'src/root';
+
+.exploreContainer {
+    width: 90%;
+    max-width: 40em;
+    margin: 5rem auto;
+}
+
+.title {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+}
+
+.sliderButton {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+
+    width: 2.5rem;
+    height: 2.5rem;
+
+    padding: 0;
+    margin: 0;
+    
+    border: initial;
+    border-style: solid;
+    border-width: 0.5rem;
+    border-color: $color-background-dark;
+    background-color: transparent;
+
+    transform: rotate(45deg) translateY(-50%);
+
+    transition-property: transform left right;
+    transition-duration: 50ms;
+
+    z-index: 5;
+}
+
+.sliderButton:hover {
+    cursor: pointer;
+    filter: brightness(0.9);
+}
+.sliderButton:active {
+    transform: rotate(45deg) translateY(-50%) scale(1.1);
+}
+
+.sliderButton:nth-of-type(1) {
+    border-right-width: 0;
+    border-top-width: 0;
+}
+
+.sliderButton:nth-of-type(2) {
+    border-left-width: 0;
+    border-bottom-width: 0;
+
+    left: auto;
+    right: 3.5rem;
+}
+
+@media (min-width: 60rem) {
+    .sliderButton:nth-of-type(1) {
+        left: -5rem;
+    }
+
+    .sliderButton:nth-of-type(2) {
+        right: -3rem;
+    }
+}
+
+.project {
+    display: block;
+    position: relative;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+
+    max-width: 40rem;
+    width: 100%;
+    height: 25rem;
+
+    border-radius: 0.5rem;
+
+    -webkit-box-shadow: 0 5px 5px 0 rgba(154,160,185,.05),0 5px 30px 0 rgba(166,173,201,.22);
+    box-shadow: 0 5px 5px 0
+    rgba(154,160,185,.05),0 5px 30px 0 rgba(166,173,201,.22);
+}
+.projectBanner {
+    position: absolute;
+    top: 2rem;
+
+    background-color: $color-background-dark;
+    width: fit-content;
+    padding: 1rem 0;
+    padding-left: 3rem;
+    padding-right: 5em;
+    
+    -webkit-clip-path: polygon(0 0, 100% 0%, calc(100% - 2rem) 100%, 0% 100%); 
+    clip-path: polygon(0 0, 100% 0%, calc(100% - 2rem) 100%, 0% 100%);
+    -webkit-box-shadow: 0 5px 5px 0 rgba(154,160,185,.05),0 5px 30px 0 rgba(166,173,201,.22);
+    box-shadow: 0 5px 5px 0
+    rgba(154,160,185,.05),0 5px 30px 0 rgba(166,173,201,.22);
+}
+
+.projectBanner > h3 {
+    color: $color-text-secondary;
+}
