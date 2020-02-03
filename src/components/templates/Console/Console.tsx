@@ -135,6 +135,11 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 
     output(text: string | Array<string> = "", type: LineType = LineType.info, method: OutputMode = OutputMode.default) {
         return new Promise(async resolve => {
+
+            let tempState = { ...this.props.console };
+            tempState.cursor.typing = true;
+            this.props.setAll(tempState);
+
             let newState = { ...this.props.console };
             // Create new empty line
             if (typeof text === 'string' && text.length === 0 && newState.lines[newState.lines.length - 1].text.length > 0)
@@ -149,6 +154,11 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                 } else {
                     newState.lines.push({ id: this.currentIndex++, type, text });
                 }
+
+                // Re-enable typing for user
+                tempState = { ...this.props.console }
+                tempState.cursor.typing = false;
+                this.props.setAll(tempState);
             } 
             
             // Typing output method
@@ -157,10 +167,14 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                 // Add new empty line
                 newState.lines.push({ id: this.currentIndex++, type, text: ""});
                 await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text, type);
+
+                // Re-enable typing for user
+                tempState = {...this.props.console }
+                tempState.cursor.typing = false;
+                this.props.setAll(tempState);
             }
             newState.lineWasAdded = true;
             this.props.setAll(newState);
-
             resolve();
         });
     }
@@ -240,31 +254,33 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
         return this.getCurrentLine();
     }
 
-    async _handleKey(event: any) {        
-        let newEvent = { ...this.props.console };
-        switch (event.key) {
-            case 'Enter':
-                let Line = this.finishLine();
-                let result = await this.interpreter.run(Line.text, newEvent);
+    async _handleKey(event: any) {
+        if (!!!this.props.console.cursor.typing) {
+            let newEvent = { ...this.props.console };
+            switch (event.key) {
+                case 'Enter':
+                    let Line = this.finishLine();
+                    let result = await this.interpreter.run(Line.text, newEvent);
 
-                if (result.state !== undefined)
-                    this.props.setAll(result.state);
+                    if (result.state !== undefined)
+                        this.props.setAll(result.state);
 
-                if (result.status !== 0)
-                    await this.output(result.message as string, LineType.error);
-                else if (result.status === 0 && result.message !== undefined)
-                    await this.output(result.message, LineType.info);
-                this.startInputLine();
-                this.props.setAll({ ...this.props.console, lineWasAdded: true });
-                break;
-            case ' ':
-                event.preventDefault();
-                this.addCharToCurrentLine(event.key);
-                break;
-            default:
-                this.addCharToCurrentLine(event.key);
+                    if (result.status !== 0)
+                        await this.output(result.message as string, LineType.error);
+                    else if (result.status === 0 && result.message !== undefined)
+                        await this.output(result.message, LineType.info);
+                    this.startInputLine();
+                    this.props.setAll({ ...this.props.console, lineWasAdded: true });
+                    break;
+                case ' ':
+                    event.preventDefault();
+                    this.addCharToCurrentLine(event.key);
+                    break;
+                default:
+                    this.addCharToCurrentLine(event.key);
+            }
+            this.props.setAll(newEvent);
         }
-        this.props.setAll(newEvent);
     }
 
     _handleKeyCode(event: any) {

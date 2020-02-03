@@ -21,6 +21,7 @@ export interface State {
         visible: boolean
     },
     cursor: {
+        typing: boolean,
         active: boolean,
         char: string,
         interval: NodeJS.Timeout | null
@@ -34,6 +35,7 @@ const defaultState = {
         visible: true
     },
     cursor: {
+        typing: false,
         active: false,
         char: "█",
         interval: null,
