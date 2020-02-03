@@ -12,7 +12,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
     cursorOffTime = 500;
 
     currentLine: React.RefObject<HTMLInputElement>;
-    bottomConsole: any;
+    console: React.RefObject<HTMLElement>;
     interpreter: Interpreter;
     constructor(props: PropsForComponent) {
         super(props);
@@ -20,7 +20,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
         this.interpreter = new Interpreter();
         
         this.currentLine = createRef();
-        this.bottomConsole = createRef();
+        this.console = createRef();
 
         this.addCharToCurrentLine = this.addCharToCurrentLine.bind(this);
         this.removeLastCharFromCurrentLine = this.removeLastCharFromCurrentLine.bind(this);
@@ -32,8 +32,11 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
     }
 
     async componentDidUpdate() {
-        if (this.props.console.lineWasAdded) {
-            this.bottomConsole.scrollIntoView({ behavior: "smooth", block: "end" });
+        if (this.props.console.lineWasAdded && this.console.current !== null) {
+            this.console.current.scrollTo({
+                top: this.console.current?.scrollHeight,
+                behavior: 'smooth'
+            });
             this.props.setAll({ ...this.props.console, lineWasAdded: false })
         }
     }
@@ -311,7 +314,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 
     render() {
         return (
-            <section className={styles.console} tabIndex={0} onKeyDown={this._handleKeyCode} onKeyPress={this._handleKey}>
+            <section ref={this.console} className={styles.console} tabIndex={0} onKeyDown={this._handleKeyCode} onKeyPress={this._handleKey}>
                 {this.props.console.lines.map(line => {
 
                     if (line.type === LineType.input) {
@@ -330,8 +333,6 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                         )
                     }
                 })}
-                <div className={styles.bottomDiv} ref={(element) => this.bottomConsole = element}>
-                </div> 
             </section>
         )
     }
