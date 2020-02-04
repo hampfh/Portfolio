@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+import { CSSTransition } from 'react-transition-group'
+import animationRight from './ExploreTransitionsRight.module.scss'
+import animationLeft from './ExploreTransitionsLeft.module.scss'
 import styles from './Explore.module.scss'
 import cre8list from 'assets/cre8list.png'
 import dotlibrary from 'assets/dotLib.png'
@@ -12,11 +15,6 @@ export class Explore extends Component<{}, StateForComponent> {
         this.state = {
             swapForward: true,
             doSwap: false,
-            active: {
-                id: 0,
-                title: "",
-                image: ""
-            },
             projects: [
 
             ]
@@ -29,12 +27,13 @@ export class Explore extends Component<{}, StateForComponent> {
         let data = [
             {
                 id: 0,
+                active: true,
                 title: "Dot library",
                 image: dotlibrary
             },
             {
                 id: 1,
-                active: true,
+                active: false,
                 title: "Cre8list",
                 image: cre8list
             }, 
@@ -47,7 +46,6 @@ export class Explore extends Component<{}, StateForComponent> {
         ]
 
         let newState = { ...this.state };
-        newState.active = data[0];
         newState.projects = data;
         this.setState(newState);
     }
@@ -56,14 +54,23 @@ export class Explore extends Component<{}, StateForComponent> {
 
         let newState = { ...this.state };
         let projects = newState.projects;
+
+        newState.swapForward = forward;
+
         for (let i = 0; i < newState.projects.length; i++) {
             if (projects[i].active === true) {
-                if (forward && projects[i + 1] !== undefined) {
-                    projects[i + 1].active = true;
-                    newState.active = projects[i + 1];
-                } else if (!!!forward && projects[i - 1] !== undefined) {
-                    projects[i - 1].active = true;
-                    newState.active = projects[i - 1];
+                if (forward) {
+                    let newTarget = projects[i + 1];
+                    if (newTarget === undefined) {
+                        newTarget = projects[0];
+                    }
+                    newTarget.active = true;
+                } else if (!!!forward) {
+                    let newTarget = projects[i - 1];
+                    if (newTarget === undefined) {
+                        newTarget = projects[projects.length - 1];
+                    }
+                    newTarget.active = true;
                 } else
                     break;
                 projects[i].active = false;
@@ -85,18 +92,33 @@ export class Explore extends Component<{}, StateForComponent> {
             <section className={styles.exploreContainer}>
                 <h2 className={styles.title}>Explore my work</h2>
                 <section className={styles.slider}>
-                    <button className={styles.sliderButton} onClick={() => { this.swipe(true) }}></button>
+                    <button className={styles.sliderButton} onClick={() => { this.swipe(true) }}></button> 
                     <section className={styles.projectContainer}>
-                        {this.state.active === undefined ? null :
-                        <article key={this.state.active.id} className={styles.project}
-                            style={{
-                                backgroundImage: `url(${this.state.active.image})`
-                            }}
-                        >
-                            <div className={styles.projectBanner}>
-                                <h3>{this.state.active.title}</h3>
-                            </div>
-                        </article>}
+                        {this.state.projects.map(project => {
+                            const animationDuration = 500;
+                            return (
+                                <CSSTransition key={project.id} in={project.active} 
+                                    classNames={
+                                        (this.state.swapForward ? 
+                                            { ...animationRight } : 
+                                            { ...animationLeft })
+                                    }
+                                    timeout={animationDuration}
+                                    style={{ 
+                                        transition: `all ${animationDuration}ms`,
+                                        backgroundImage: `url(${project.image})`,
+                                    }}
+                                    unmountOnExit
+                                    mountOnEnter
+                                >
+                                    <article key={project.id} className={styles.project}>
+                                        <div className={styles.projectBanner}>
+                                            <h3>{project.title}</h3>
+                                        </div>
+                                    </article>
+                                </CSSTransition>
+                            )
+                        })}
                     </section>
                     <button className={styles.sliderButton} onClick={() => { this.swipe(false) }}></button>
                 </section>
@@ -115,7 +137,6 @@ interface Project {
 interface StateForComponent {
     swapForward: boolean,
     doSwap: boolean,
-    active?: Project,
     projects: Array<Project>
 }
 
