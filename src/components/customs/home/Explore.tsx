@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import { CSSTransition } from 'react-transition-group'
 import animationRight from './ExploreTransitionsRight.module.scss'
@@ -27,18 +28,21 @@ export class Explore extends Component<{}, StateForComponent> {
         let data = [
             {
                 id: 0,
+                link: '/dotlibrary',
                 active: true,
                 title: "Dot library",
                 image: dotlibrary
             },
             {
                 id: 1,
+                link: '/cre8list',
                 active: false,
                 title: "Cre8list",
                 image: cre8list
             }, 
             {
                 id: 2,
+                link: '/dotlibrary',
                 active: false,
                 title: "TEST",
                 image: cre8list
@@ -115,6 +119,13 @@ export class Explore extends Component<{}, StateForComponent> {
                                         <div className={styles.projectBanner}>
                                             <h3>{project.title}</h3>
                                         </div>
+                                        <div className={styles.btnContainer}>
+                                            <Link className={styles.btnLink} to={project.link}>
+                                                <div className={styles.readMoreBtn}>
+                                                    <p className={styles.btnTextLink}>Read more</p>
+                                                </div>
+                                            </Link>
+                                        </div>
                                     </article>
                                 </CSSTransition>
                             )
@@ -129,6 +140,7 @@ export class Explore extends Component<{}, StateForComponent> {
 
 interface Project {
     id: number,
+    link: string,
     active?: boolean,
     title: string,
     image: string

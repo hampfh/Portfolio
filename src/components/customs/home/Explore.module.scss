@@ -4,6 +4,7 @@
     width: 90%;
     max-width: 40em;
     margin: 5rem auto;
+    margin-bottom: 10rem;
 }
 
 .title {
@@ -113,5 +114,49 @@
 }
 
 .projectBanner > h3 {
+    color: $color-text-secondary;
+}
+
+.btnContainer {
+    position: relative;
+    top: calc(100% + 2rem);
+
+    display: flex;
+    justify-content: center;
+}
+
+.btnLink {
+    text-decoration: none;
+}
+
+.readMoreBtn {
+    border-radius: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 15rem;
+    height: 3rem;
+
+    background-color: $color-background-dark;
+    transition-property: transform;
+    transition-duration: 50ms;
+
+    -webkit-box-shadow: 0 5px 5px 0 rgba(154,160,185,.05),0 5px 30px 0 rgba(166,173,201,.22);
+    box-shadow: 0 5px 5px 0 rgba(154,160,185,.05),0 5px 30px 0 rgba(166,173,201,.22);
+}
+.readMoreBtn:hover {
+    filter: brightness(1.1);
+}
+.readMoreBtn:active {
+    transform: scale(0.90);
+}
+
+.btnTextLink {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    text-decoration: none;
     color: $color-text-secondary;
 }
