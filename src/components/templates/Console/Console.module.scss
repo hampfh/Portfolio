@@ -3,6 +3,8 @@
 .consoleWindow {
     font-family: 'Ubuntu Mono', monospace;
 
+    user-select: none;
+
     --terminalHeight: 32px;
 
     position: relative;

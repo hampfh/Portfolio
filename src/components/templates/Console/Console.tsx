@@ -43,6 +43,15 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 
     async componentDidMount() {
 
+        // Clear lines on mount
+        let newState = this.props.console;
+        newState.lines = [];
+        newState.cursor.active = false;
+        newState.cursor.typing = false;
+        if (newState.cursor.interval !== null)
+            clearTimeout(newState.cursor.interval);
+        this.props.setAll(newState);
+
         if (this.props.onLoadMessage !== undefined) {
             let batch = this.props.onLoadMessage;
             for (let i = 0; i < batch.length; i++) {

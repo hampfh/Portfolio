@@ -3,10 +3,12 @@
 .aboutContainer {
     position: relative;
     width: 90%;
-    max-width: 40rem;
+    max-width: 50rem;
     text-align: left;
     left: 50%;
     transform: translateX(-50%);
+
+    margin-bottom: 10rem;
 }
 
 .portrait {
