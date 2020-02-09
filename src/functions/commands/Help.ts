@@ -6,6 +6,8 @@ export default function ExitConsole(): ReturnType {
         '<help> List all commands',
         '<exit> Close this window',
         '<clear> Clear all previous lines',
+        '<eject> Make console movable',
+        '<ping> Unknown',
         '======================================'
     ]
     return { status: 0, message };

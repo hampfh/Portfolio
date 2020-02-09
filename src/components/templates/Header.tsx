@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
 import styles from './Header.module.scss'
 import landscape from 'assets/landscape.svg'
 
@@ -12,7 +14,7 @@ export class Header extends Component {
             <div className={styles.imageContainer} style={headerStyle}>
                 <header className={styles.header} >
                     <aside className={styles.aside}>
-                        <p className={styles.asideText}>Hampus Hallkvist</p>
+                        <Link to="/" style={{ textDecoration: "initial" }}><p className={styles.asideText}>Hampus Hallkvist</p></Link>
                     </aside>
                 </header>
             </div>

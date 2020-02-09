@@ -4,6 +4,7 @@ import ClearConsole from 'functions/commands/ClearConsole'
 import ExitConsole from 'functions/commands/ExitConsole'
 import Help from 'functions/commands/Help'
 import EjectConsole from 'functions/commands/EjectConsole'
+import Ping from 'functions/commands/Ping'
 
 export interface ReturnType {
     status?: number,
@@ -18,15 +19,15 @@ interface CommandArg {
 
 interface CatalogeItem {
     command: string,
-    arguments: Array<CommandArg>,
     out: Function
 }
 
 const cataloge: Array<CatalogeItem> = [
-    { command: 'help', arguments: [], out: Help },
-    { command: 'exit', arguments: [], out: ExitConsole },
-    { command: 'clear', arguments: [], out: ClearConsole },
-    { command: 'eject', arguments: [], out: EjectConsole },
+    { command: 'help', out: Help },
+    { command: 'exit', out: ExitConsole },
+    { command: 'clear', out: ClearConsole },
+    { command: 'eject', out: EjectConsole },
+    { command: 'ping', out: Ping }
 ]
 
 export default class Interpreter {
@@ -49,19 +50,16 @@ export default class Interpreter {
                 }
             }
 
+            // Remove command from array, left are now only arguments
+            result.result.shift()
+
             if (command === null) {
                 resolve({ status: 1, message: "Command not recognized" });
                 return;
             }
 
-            // Invalid or too many arguments
-            if (result.result.length - 1 > command.arguments.length) {
-                resolve({ status: 1, message: "Unmatched arguments" });
-                return;
-            }
-
             // Check return type of out
-            resolve({ ...command.out(state) });
+            resolve({ ...command.out(state, result.result) });
         });
     }
 
