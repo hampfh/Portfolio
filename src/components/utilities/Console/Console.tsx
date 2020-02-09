@@ -52,6 +52,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             clearTimeout(newState.cursor.interval);
         this.props.setAll(newState);
 
+        // Load already existing text
         if (this.props.onLoadMessage !== undefined) {
             let batch = this.props.onLoadMessage;
             for (let i = 0; i < batch.length; i++) {
@@ -68,13 +69,22 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
         }
     }
 
-    typeRecursive(index: number | Index, data: string | Array<string>, type: LineType = LineType.info) {
-        const DefaultDelays = {
+    typeRecursive(index: number | Index, data: string | Array<string>, type: LineType = LineType.info, method: OutputMode = OutputMode.typing) {
+        const LineDelay = {
+            char: 0,
+            space: 0,
+            newLine: 300,
+            loadingChar: 0
+        }
+        const TypingDelay = {
             char: 40,
             space: 15,
             newLine: 150,
             loadingChar: 500
         }
+
+        // Typing method
+        let DefaultDelays = (method === OutputMode.typing ? TypingDelay : LineDelay);
 
         // Get next char
         let nextChar: string = "";
@@ -121,7 +131,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                     }
 
                     if (index.outerIndex < data.length) 
-                        await this.typeRecursive(index, data, type);
+                        await this.typeRecursive(index, data, type, method);
 
                     resolve();
                 }, thisDelay);
@@ -132,7 +142,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                     if (data[index] !== undefined)
                         this.addCharToCurrentLine(data[index], type);
                     if (index < data.length)
-                        await this.typeRecursive(++index, data, type);
+                        await this.typeRecursive(++index, data, type, method);
                      
                     // Only the first instance of the recursion will create a newline
                     if (index === 0) {
@@ -174,11 +184,11 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             } 
             
             // Typing output method
-            else if (method === OutputMode.typing) {
+            else if (method === OutputMode.typing || method === OutputMode.line) {
                 this.finishLine();
                 // Add new empty line
                 newState.lines.push({ id: this.currentIndex++, type, text: ""});
-                await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text, type);
+                await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text, type, method);
 
                 // Re-enable typing for user
                 tempState = {...this.props.console }

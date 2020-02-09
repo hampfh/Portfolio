@@ -69,7 +69,7 @@ export class ConsoleWindow extends Component<PropsForComponent, ConsoleState> {
                                 text: [ "fetch webpage" ]
                             },
                             { 
-                                type: LineType.info, mode: OutputMode.default,
+                                type: LineType.info, mode: OutputMode.line,
                                 text: [
                                     "Detecting visitor!",
                                     "Polishing shoes...",

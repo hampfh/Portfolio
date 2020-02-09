@@ -2,7 +2,8 @@ import { ActionType } from './'
 
 export enum OutputMode {
     default = 'default',
-    typing = 'typing'
+    typing = 'typing',
+    line = 'line'
 }
 export enum LineType {
     input = 'input',
