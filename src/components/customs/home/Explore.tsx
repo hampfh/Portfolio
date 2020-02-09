@@ -5,8 +5,10 @@ import { CSSTransition } from 'react-transition-group'
 import animationRight from './ExploreTransitionsRight.module.scss'
 import animationLeft from './ExploreTransitionsLeft.module.scss'
 import styles from './Explore.module.scss'
-import cre8list from 'assets/cre8list.png'
+
+import erislaw from 'assets/erislawLogo.png'
 import dotlibrary from 'assets/dotLib.png'
+import pys from 'assets/physicsSimulator.png'
 
 export class Explore extends Component<{}, StateForComponent> {
 
@@ -35,17 +37,17 @@ export class Explore extends Component<{}, StateForComponent> {
             },
             {
                 id: 1,
-                link: '/cre8list',
+                link: '/physicssimulator',
                 active: false,
-                title: "Cre8list",
-                image: cre8list
+                title: "Physics simulator",
+                image: pys
             }, 
             {
                 id: 2,
-                link: '/dotlibrary',
+                link: '/erislaw',
                 active: false,
-                title: "TEST",
-                image: cre8list
+                title: "Erislaw webpage",
+                image: erislaw
             },
         ]
 

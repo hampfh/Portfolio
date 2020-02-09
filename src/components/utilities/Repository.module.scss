@@ -1,11 +1,13 @@
 @import 'src/root';
 
 .container {
-    width: 8rem;
+    width: 9rem;
     margin: 2rem;
 }
 
 .logoContainer {
+    display: flex;
+    align-items: center;
     margin-left: 0.5rem;
 }
 
@@ -15,4 +17,5 @@
 
 .mark {
     width: 2rem;
+    margin: 0.5rem;
 }

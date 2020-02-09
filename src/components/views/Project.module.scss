@@ -13,12 +13,12 @@
     width: 90%;
 }
 
-.header {
+.textSection.header {
     margin-bottom: 5rem;
 }
 
 .header h1 {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .headerTop {
@@ -55,7 +55,7 @@
     max-width: 20rem;
     width: 60%;
     max-height: 10rem;
-    object-fit: cover;
+    object-fit: contain;
 
     margin-top: 2rem;
     margin-bottom: 2rem;
