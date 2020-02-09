@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import ConsoleWindow from 'components/templates/Console'
+import ConsoleWindow from 'components/utilities/Console'
 
 import { connect } from 'react-redux'
 import { State as ConsoleState } from 'state/reducers/console'
 
 import { CSSTransition } from 'react-transition-group'
-import transitionStyle from 'components/templates/Console/ConsoleTransitions.module.scss'
+import transitionStyle from 'components/utilities/Console/ConsoleTransitions.module.scss'
 
 import styles from './Intro.module.scss'
 

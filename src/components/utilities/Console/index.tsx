@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Toolbar from './Toolbar'
 import { OutputMode, LineType } from 'state/reducers/console'
-import Console from 'components/templates/Console/Console'
+import Console from 'components/utilities/Console/Console'
 
 import { State as ConsoleState } from 'state/reducers/console'
 import { moving, setPosition } from 'state/actions/console'
