@@ -96,6 +96,24 @@
     overflow-y: scroll;
     scrollbar-width: thin;
     overscroll-behavior: contain;
+
+    outline: none;
+    scrollbar-highlight-color: none;
+}
+
+
+// Scrollbar customizations
+.console::-webkit-scrollbar {
+    width: 8px;
+}
+.console::-webkit-scrollbar-thumb {
+    background: #666;  
+}
+.console::-webkit-scrollbar-thumb:hover {
+    background: #555;  
+}
+.console::-webkit-scrollbar-thumb:active {
+    background: #444;  
 }
 
 .userPrefix {

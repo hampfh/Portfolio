@@ -40,6 +40,9 @@
     transition-property: transform left right;
     transition-duration: 50ms;
 
+    outline: none;
+    scrollbar-highlight-color: none;
+
     z-index: 5;
 }
 
