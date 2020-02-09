@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import me from 'assets/me.jpg'
 
 import styles from './About.module.scss'
 

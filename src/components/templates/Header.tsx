@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import styles from './Header.module.scss'
 import landscape from 'assets/landscape.svg'
 
@@ -15,14 +14,6 @@ export class Header extends Component {
                     <aside className={styles.aside}>
                         <p className={styles.asideText}>Hampus Hallkvist</p>
                     </aside>
-                    <nav>
-                        <div className={styles.navLink}>
-                            <Link to="/">Home</Link>
-                        </div>
-                        <div className={styles.navLink}>
-                            <Link to="/portfolio">Portfolio</Link>
-                        </div>
-                    </nav>
                 </header>
             </div>
         )
