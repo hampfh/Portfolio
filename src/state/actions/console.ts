@@ -1,4 +1,4 @@
-import { State } from 'state/reducers/console'
+import { State, Resize } from 'state/reducers/console'
 
 export const setAll = (payload: State) => {
     return {
@@ -22,6 +22,18 @@ export const setInitialPosition = (x: number, y: number) => {
         payload: { x, y }
     }
 }
+export const setInitialResizePosition = (x: number, y: number) => {
+    return {
+        type: "SET_INITIAL_RESIZE_POSITION",
+        payload: { x, y }
+    }
+}
+export const setInitialDimension = (width: number, height: number) => {
+    return {
+        type: "SET_INITIAL_DIMENSION",
+        payload: { width, height }
+    }
+}
 export const setPosition = (x: number, y: number) => {
     return {
         type: "SET_POSITION",
@@ -32,6 +44,12 @@ export const setDimension = (width: number, height: number) => {
     return {
         type: "SET_DIMENSION",
         payload: { width, height }
+    }
+}
+export const setResize = (resize: Resize) => {
+    return {
+        type: "SET_RESIZE",
+        payload: { resize }
     }
 }
 
