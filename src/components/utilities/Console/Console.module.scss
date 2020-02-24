@@ -8,6 +8,7 @@
     --terminalHeight: 32px;
 
     position: relative;
+    top: -50%;
 
     border-radius: .3em;
 
@@ -65,8 +66,6 @@
     overflow: hidden;
     display: block;
     position: absolute;
-
-    cursor: move;
 
     z-index: 1001;
 }
