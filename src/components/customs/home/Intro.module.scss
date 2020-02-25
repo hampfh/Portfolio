@@ -18,6 +18,13 @@
 
 .fullname {
     margin-bottom: 0.5rem;
+    mix-blend-mode: difference;
+    color: #bbb;
+}
+
+.slogan {
+    mix-blend-mode: difference;
+    color: #bbb;
 }
 
 .textContainer {
@@ -33,7 +40,7 @@
         margin: 0 5rem;
         height: 15rem;
 
-        margin: 15rem auto;
+        margin: 4rem auto;
         margin-top: 5rem;
 
         max-width: 80rem;

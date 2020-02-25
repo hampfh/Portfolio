@@ -2,4 +2,20 @@
 
 .master {
     margin-bottom: 5rem;
+    background-size: auto 100%;
+    background-position-x: center;
+    background-position-y: -7rem;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: $media-min-middle-view) {
+    .master {
+        background-image: none !important;
+    }
+}
+
+@media (min-width: $media-min-desktop-view) {
+    .master {
+        background-position-y: 2rem;
+    }
 }

@@ -16,7 +16,7 @@ export class Intro extends Component<PropsForComponent> {
             <section className={styles.introContainer}>
                 <div className={styles.textContainer}>
                     <h1 className={styles.fullname}>Hampus Hallkvist</h1>
-                    <p className="slogan">A hobby developer doing stuff and things</p>
+                    <p className={styles.slogan}>A hobby developer doing stuff and things</p>
                 </div>
                 <CSSTransition in={this.props.console.window.visible} classNames={{ ...transitionStyle }} unmountOnExit timeout={animationDuration}
                     style={{ transition: `transform ${animationDuration}ms` }}

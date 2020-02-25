@@ -8,7 +8,15 @@
     left: 50%;
     transform: translateX(-50%);
 
-    margin-bottom: 10rem;
+    padding: 4rem 0;
+
+    margin-bottom: 2rem;
+}
+
+@media (min-width: $media-min-desktop-view) {
+    .aboutContainer {
+        mix-blend-mode: difference;
+    }
 }
 
 .portrait {
@@ -29,10 +37,4 @@
 .article p {
     line-height: 1.5rem;
     margin-bottom: 1rem;
-}
-
-@media (min-width: $media-min-desktop-view) {
-    .aboutContainer {
-        
-    }
 }

@@ -1,13 +1,18 @@
 @import 'src/root';
 
 .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10rem;
     padding: 1rem 4rem;
-    background-color: $color-background-dark;
+    background-color: $color-background-medium;
 }
 
 .footer h4,
 .footer p {
-    color: $color-text-secondary;
+    color: $color-text-primary;
+    margin-bottom: 0.25rem;
 }
 
 .socialMedia {
@@ -26,6 +31,7 @@
     text-align: center;
 }
 .socialMedia ul a {
+    color: $color-text-primary;
     margin-bottom: 0.25rem;
 }
 
