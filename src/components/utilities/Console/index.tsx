@@ -32,13 +32,20 @@ export class ConsoleWindow extends Component<PropsForComponent> {
     
 
     _handleMove(event: React.MouseEvent<HTMLElement, MouseEvent>) {
+        // Calc max y for console to move 
+        const consoleYOffsetFromTop = 160; // WARNING: Hardcoded value
+        const maxY = document.getElementById('root')?.clientHeight || 0;
         const initial = this.props.console.transform.initial;
 
         // Moving
         if (this.props.console.transform.isMoving) {
             // Calc offset
             const newX = event.pageX - initial.x;
-            const newY = event.pageY - initial.y;
+            let newY = event.pageY - initial.y;
+
+            // Restict y value
+            if (+newY + +this.props.console.transform.height > maxY - consoleYOffsetFromTop)
+                newY = maxY - this.props.console.transform.height - consoleYOffsetFromTop;
             this.props.setPosition(newX, newY);
         } // Resizing
         else if (this.props.console.transform.resize !== Resize.NONE) {
