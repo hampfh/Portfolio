@@ -22,8 +22,14 @@
 }
 
 .headerTop {
-    display: grid;
-    grid-template-columns: 1fr min-content;
+    display: flex;
+}
+
+@media(min-width: 20rem) {
+    .headerTop {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+    }
 }
 
 .date {
@@ -113,7 +119,7 @@
     color: $color-primary-hover !important;
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 50rem) {
     .aside {
         display: block;
     }

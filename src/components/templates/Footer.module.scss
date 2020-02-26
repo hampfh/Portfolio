@@ -1,6 +1,10 @@
 @import 'src/root';
 
 .footer {
+    border-top: $color-background-footer;
+    border-top-width: 1px;
+    border-top-style: solid;
+
     display: flex;
     align-items: center;
     justify-content: center;

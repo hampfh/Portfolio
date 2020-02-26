@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import styles from './Header.module.scss'
-import landscape from 'assets/landscape.svg'
 
 export class Header extends Component {
     render() {
+        return null;
         return (
             <div className={styles.headerContainer} >
                 <header className={styles.header} >

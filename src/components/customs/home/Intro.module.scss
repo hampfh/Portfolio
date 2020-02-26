@@ -6,7 +6,7 @@
     justify-content: center;
     text-align: center;
 
-    margin: 5rem 0;
+    margin: 2.5rem 0;
 }
 
 .aside {
@@ -18,18 +18,6 @@
 
 .fullname {
     margin-bottom: 0.5rem;
-    mix-blend-mode: difference;
-    color: #bbb;
-}
-
-.slogan {
-    mix-blend-mode: difference;
-    color: #bbb;
-}
-
-.textContainer {
-    position: relative;
-    bottom: 2rem;
 }
 
 @media (min-width: $media-min-middle-view) {
@@ -40,10 +28,14 @@
         margin: 0 5rem;
         height: 15rem;
 
-        margin: 4rem auto;
-        margin-top: 5rem;
+        margin: 5rem auto;
 
         max-width: 80rem;
+    }
+    .slogan,
+    .fullname {
+        mix-blend-mode: difference;
+        color: #bbb;
     }
 }
 
@@ -53,5 +45,10 @@
     }
     .aside {
         display: block;
+    }
+    .slogan,
+    .fullname {
+        mix-blend-mode: initial;
+        color: $color-text-primary;
     }
 }
