@@ -6,7 +6,9 @@
     justify-content: center;
     text-align: center;
 
-    margin: 2.5rem 0;
+    height: 10rem;
+
+    margin: 0 2.5rem;
 }
 
 .aside {
@@ -29,6 +31,7 @@
         height: 15rem;
 
         margin: 5rem auto;
+        margin-top: 0;
 
         max-width: 80rem;
     }
@@ -41,7 +44,7 @@
 
 @media (min-width: $media-min-desktop-view) {
     .introContainer {
-        height: 30rem;
+        height: 40rem;
     }
     .aside {
         display: block;
