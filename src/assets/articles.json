@@ -1,7 +1,7 @@
 {
     "dotlibrary": {
         "url": "",
-        "repositoryLink": "",
+        "repositoryLink": "https://github.com/Hampfh/dotlibrary",
         "date": "14-11-2017",
         "header": {
             "title": "Dotlibrary",
@@ -153,6 +153,48 @@
                 "title": "Disscussion",
                 "text": [
                     "Having finished this project I can say that I've learned a huge amount of things. This project forced me to understand, design, backend and a specific platform simultaneously. I had a lot of problems doing some very specific changes for the design and one of the things I've learned for the future is to not use a platform for my future sites. I realize now that my need to be able to access all parts of the system does not work very well with a platform that builds stuff for you. Joomla is an excellent tool for creating a webpage swiftly and without to much design but when the page gets requirements on how it's supposed to look it becomes harder and harder to work with a platform. However, using a platform such as Joomla saved me a bunch of time managing databases and creating systems which gave specific users privileges to edit articles and so on. "
+                ]
+            }
+        ]
+    },
+    "arrender": {
+        "url": "string",
+        "repositoryLink": "",
+        "date": "2-10-2019",
+        "header": {
+            "title": "Arrender",
+            "text": [
+                "Arrender.app is a project created to simplify planning and \"get togethers\" by giving the user a simple and intuitive application with visual presentations of when people are available. This project is one of the largest projects I've worked on and has brought me much knowledge in the web-stack. Not to mention that this project was my first serious collaborative project, made together with Martin Ryberg Laude."
+            ],
+            "aside": [
+                {
+                    "title": "Role",
+                    "text": "Full stack (no UI/UX, design)"
+                },
+                {
+                    "title": "Product",
+                    "text": "arrender.app",
+                    "link": "https://arrender.app"
+                },
+                {
+                    "title": "Collaborators",
+                    "text": "Martin Ryberg Laude",
+                    "link": "https://martinryberglaude.com"
+                }
+            ]
+        },
+        "sections": [
+            {
+                "title": "Aim",
+                "text": [
+                    "This project was initially born from the idea that it could be a lot easier to organize meetings than it currently is. Today a meeting is generally organized via mails conversations where multiple people send their available time back and forth to find the best suited time. This was something we wanted to solve with the project we call Arrender.",
+                    "The idea was to create a shared calendar that all participants in the meeting could see and add their information to and then let the system find the best time. Another important aspect for us was to minimize the friction for people to interact with the product. Therefore we wanted to make it possible for people that didn't have an account to also participate in meetings, a feature we'd later call \"guest users\"."
+                ]
+            },
+            {
+                "title": "Disscussion",
+                "text": [
+                    "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc"
                 ]
             }
         ]

@@ -20,11 +20,6 @@ export class App extends Component {
                     <Route exact path="/:project" 
                         component={Project}
                     />
-                    <Route 
-                        component={() => {
-                            return <div><h1>404</h1><h2>This page cannot be found</h2></div>
-                        }}
-                    />
                 </Switch>
                 <Footer />
             </Router>

@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import GithubRepository from 'components/utilities/Repository'
-import uuid from 'uuid/v4'
+import { v4 as uuid } from "uuid"
 
 import articles from 'assets/articles.json'
 
 import styles from './Project.module.scss'
+import errorStyles from './pageNotFound.module.scss'
 
 export class Project extends Component<PropsForComponent, StateForComponent> {
 
@@ -21,6 +23,9 @@ export class Project extends Component<PropsForComponent, StateForComponent> {
                 break;
             case 'erislaw':
                 this.state = articles['erislaw'];
+                break;
+            case 'arrender':
+                this.state = articles['arrender'];
                 break;
         }
     }
@@ -57,39 +62,68 @@ export class Project extends Component<PropsForComponent, StateForComponent> {
     }
 
     render() {
-        return (
-            <section className={styles.masterContainer}>
-                <article className={styles.article}>
-                    <GithubRepository align="center" />
-                    <header className={styles.header + " " + styles.textSection}>
-                        <div className={styles.mainText}>
-                            <div className={styles.headerTop}>
-                                <h1>{this.state.header.title}</h1>
-                                <p className={styles.date}>{this.state.date}</p>
+        if (this.state === null) {
+            return (
+                <div className={errorStyles.container}>
+                    <div className={errorStyles.textContainer}>
+                        <h1 className={errorStyles.text}>404</h1>
+                        <h4 className={errorStyles.text}>This page could not be found</h4>
+                            <div className={errorStyles.buttonContainer}>
+                                <Link to={"/"}>
+                                    <h4>Go back to home page</h4>
+                                </Link>
                             </div>
-                            {this.state.header.text.map(line => {
-                                return <p key={uuid()}>{line}</p>
-                            })}
-                        </div>
-                        <this.aside textSection={this.state.header} />
-                    </header>
-                    {this.state.sections.map(section => {
-                        return (
-                            <section key={uuid()} className={styles.textSection}>
-                                <div className={styles.mainText}>
-                                    <h3>{section.title}</h3>
-                                    {section.text.map(text => {
-                                        return <p key={uuid()}>{text}</p>
-                                    })}
+                    </div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <section className={styles.masterContainer}>
+                    <article className={styles.article}>
+                        {this.state.repositoryLink.length <= 0 ? 
+                            <div className={styles.topPadding}></div> :
+                            <GithubRepository align="center" />
+                        }
+                        
+                        { /* Create header paragraph */}
+                        <header className={styles.header + " " + styles.textSection}>
+                            <div className={styles.mainText}>
+                                <div className={styles.headerTop}>
+                                    <h1>{this.state.header.title}</h1>
+                                    <p className={styles.date}>{this.state.date}</p>
                                 </div>
-                                <this.aside textSection={section} />
-                                <this.image image={section.image} />
-                            </section>
-                        )
-                    })}
-                </article>
-            </section>
-        )
+                                {this.state.header.text.map(line => {
+                                    return <p key={uuid()}>{line}</p>
+                                })}
+                            </div>
+                            <this.aside textSection={this.state.header} />
+                        </header>
+                        { /* Create body paragraphs */ }
+                        {this.state.sections.map(section => {
+                            return (
+                                <section key={uuid()} className={styles.textSection}>
+                                    <div className={styles.mainText}>
+                                        <h3>{section.title}</h3>
+                                        {section.text.map(text => {
+                                            return <p key={uuid()}>{text}</p>
+                                        })}
+                                    </div>
+                                    <this.aside textSection={section} />
+                                    <div className={styles.imageContainer}>
+                                        {section.image?.map(image => {
+                                            return (
+                                                <this.image image={image} />
+                                            )
+                                        })}
+                                    </div>
+                                </section>
+                            )
+                        })}
+                    </article>
+                </section>
+            )
+        }
     }
 }
 
@@ -101,7 +135,7 @@ interface TextSection {
         text: string,
         link?: string
     }>,
-    image?: string
+    image?: Array<string>
 }
 
 interface StateForComponent {

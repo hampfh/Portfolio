@@ -9,6 +9,8 @@ import styles from './Explore.module.scss'
 import erislaw from 'assets/erislawLogo.png'
 import dotlibrary from 'assets/dotLib.png'
 import pys from 'assets/physicsSimulator.png'
+import createList from 'assets/cre8list.png'
+import arrender from 'assets/arrender.svg'
 
 export class Explore extends Component<{}, StateForComponent> {
 
@@ -49,6 +51,20 @@ export class Explore extends Component<{}, StateForComponent> {
                 title: "Erislaw webpage",
                 image: erislaw
             },
+            {
+                id: 3,
+                link: '/cre8list',
+                active: false,
+                title: "Cre8list",
+                image: createList
+            },
+            {
+                id: 4,
+                link: '/arrender',
+                active: false,
+                title: "Arrender",
+                image: arrender
+            }
         ]
 
         let newState = { ...this.state };
