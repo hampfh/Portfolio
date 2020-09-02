@@ -187,7 +187,7 @@ export class ConsoleWindow extends Component<PropsForComponent> {
                             { 
                                 type: LineType.input, mode: OutputMode.typing, 
                                 text: [ "fetch webpage" ]
-                            },
+							},
                             { 
                                 type: LineType.info, mode: OutputMode.line,
                                 text: [
@@ -195,13 +195,23 @@ export class ConsoleWindow extends Component<PropsForComponent> {
                                     "Polishing shoes...",
                                     "Double check backslick...",
                                     "Ironing clothes...",
-                                    "Straightening tie...",
-                                    "Double check backslick...",
-                                    "■■■■■■■■■■ Done!",
-                                    "Hello there dear visitor!",
-                                    "Welcome to the page :D"
-                                ]
-                            }
+									"Straightening tie...",
+								]
+							},
+							{
+								type: LineType.info, mode: OutputMode.typing,
+								text: [
+									"■■■■■■■■■■ Done!",
+								]
+							},
+							{
+								type: LineType.info, mode: OutputMode.line,
+								text: [
+									"Double check backslick...",
+									"Hello there dear visitor!",
+									"Welcome to the page :D"
+								]
+							}
                         ]} 
                     />
                 </section>

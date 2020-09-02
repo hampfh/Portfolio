@@ -57,7 +57,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             let batch = this.props.onLoadMessage;
             for (let i = 0; i < batch.length; i++) {
                 let lines = this.props.onLoadMessage[i];
-                await this.output(lines.text, lines.type, lines.mode);
+				await this.output(lines.text, lines.type, lines.mode);
             }
         }
         if (this.props.interactive !== undefined && this.props.interactive === true) {
@@ -67,7 +67,36 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             if (this.props.console.cursor.interval === null)
                 this.toggleCursor();   
         }
-    }
+	}
+	
+	typeLine(line: string | string[], type: LineType = LineType.info, lineDelay: number, index: number | undefined = undefined) {
+		return new Promise(resolve => {
+			const newState = { ...this.props.console }
+			if (Array.isArray(line) && index !== undefined) {
+				newState.lines.push({ id: this.currentIndex++, type, text: line[index] });
+				
+				// Re-enable typing for user
+				newState.cursor.typing = false;
+				newState.lineWasAdded = true;
+				this.props.setAll(newState);
+				index++
+
+				setTimeout(async () => {
+					if (index !== undefined && index < line.length)
+						await this.typeLine(line, type, lineDelay, index)
+					resolve()
+				}, lineDelay)
+
+			} else {
+				newState.lines.push({ id: this.currentIndex++, type, text: line as string });
+				// Re-enable typing for user
+				newState.cursor.typing = false;
+				newState.lineWasAdded = true;
+				this.props.setAll(newState);
+				resolve()
+			}
+		})
+	}
 
     typeRecursive(index: number | Index, data: string | Array<string>, type: LineType = LineType.info, method: OutputMode = OutputMode.typing) {
         const LineDelay = {
@@ -187,8 +216,11 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
             else if (method === OutputMode.typing || method === OutputMode.line) {
                 this.finishLine();
                 // Add new empty line
-                newState.lines.push({ id: this.currentIndex++, type, text: ""});
-                await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text, type, method);
+				newState.lines.push({ id: this.currentIndex++, type, text: ""});
+				if (method === OutputMode.line) {
+					await this.typeLine(text, type, 900, 0)
+				} else 
+                	await this.typeRecursive((Array.isArray(text) ? { innerIndex: 0, outerIndex: 0 } : 0), text, type, method);
 
                 // Re-enable typing for user
                 tempState = {...this.props.console }
@@ -196,7 +228,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
                 this.props.setAll(tempState);
             }
             newState.lineWasAdded = true;
-            this.props.setAll(newState);
+			this.props.setAll(newState);
             resolve();
         });
     }
@@ -272,7 +304,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
         // Reset cursor
         newState.cursor.active = false;
 
-        this.props.setAll(newState);
+		this.props.setAll(newState);
         return this.getCurrentLine();
     }
 
