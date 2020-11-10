@@ -1,4 +1,29 @@
 {
+	"datasektionen": {
+		"url": "https://new.datasektionen.link",
+		"repositoryLink": "https://github.com/Hampfh/DataLinks",
+		"date": "10-11-2020",
+		"header": {
+			"title": "DataLinks",
+			"text": [
+				"KTH Datasektionens site for links and quick access to content"
+			],
+			"aside": [
+				{
+					"title": "Role",
+					"text": "Full stack developer"
+				},
+				{
+					"title": "Associations",
+					"text": "Github page",
+					"link":"https://github.com/Hampfh/Datalinks"
+				}
+			]
+		},
+		"sections": [
+
+		]
+	},
     "dotlibrary": {
         "url": "",
         "repositoryLink": "https://github.com/Hampfh/dotlibrary",

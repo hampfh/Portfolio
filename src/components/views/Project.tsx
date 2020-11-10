@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
 import GithubRepository from 'components/utilities/Repository'
 import { v4 as uuid } from "uuid"
 
 import articles from 'assets/articles.json'
 
-import styles from './Project.module.scss'
-import errorStyles from './pageNotFound.module.scss'
+import styles from "./Project.module.scss"
+import errorStyles from "./pageNotFound.module.scss"
 
 export class Project extends Component<PropsForComponent, StateForComponent> {
 
@@ -15,6 +15,9 @@ export class Project extends Component<PropsForComponent, StateForComponent> {
 
         let project = this.props.match.params.project as string;
         switch (project) {
+			case 'datasektionen':
+				this.state = articles['datasektionen'];
+				break;
             case 'dotlibrary':
                 this.state = articles['dotlibrary'];
                 break;

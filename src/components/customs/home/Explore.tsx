@@ -11,6 +11,7 @@ import dotlibrary from 'assets/dotLib.png'
 import pys from 'assets/physicsSimulator.png'
 import createList from 'assets/cre8list.png'
 import arrender from 'assets/arrender.svg'
+import dataLinks from 'assets/datasektionenLogo.png'
 
 export class Explore extends Component<{}, StateForComponent> {
 
@@ -33,7 +34,7 @@ export class Explore extends Component<{}, StateForComponent> {
             {
                 id: 0,
                 link: '/dotlibrary',
-                active: true,
+                active: false,
                 title: "Dot library",
                 image: dotlibrary
             },
@@ -61,10 +62,17 @@ export class Explore extends Component<{}, StateForComponent> {
             {
                 id: 4,
                 link: '/arrender',
-                active: false,
+                active: true,
                 title: "Arrender",
                 image: arrender
-            }
+			},
+			{
+				id: 5,
+				link: "./datasektionen",
+				active: false,
+				title: "Data links",
+				image: dataLinks
+			}
         ]
 
         let newState = { ...this.state };
