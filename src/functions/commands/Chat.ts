@@ -1,10 +1,16 @@
 import { LineType, State as ConsoleState } from "state/reducers/console"
 import { IChatState } from "state/reducers/chat"
 import { ReturnType } from "functions/Interpreter"
+import { socketEmit } from "components/utilities/SocketManager"
 
 export function EnterChat(args: string[], consoleState: ConsoleState, chatState: IChatState): ReturnType {
 	chatState.active = true
 	consoleState.lines = [{ id: Math.random() * 1000, type: LineType.info, text: "Entered chat mode" }]
+
+	socketEmit("enterchat", {
+		user: chatState.chatName ?? "Anonymous",	
+	})
+
 	return { status: 0, state: consoleState, chatState };
 }
 

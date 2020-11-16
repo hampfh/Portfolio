@@ -7,7 +7,6 @@ const socket = process.env.NODE_ENV === "production" ?
 
 export const socketEmit = (key: string, data: any) => {
 	socket.emit(key, data)
-	console.log(socket)
 }
 
 export default class SocketManager extends Component<PropsForComponent, StateForComponent> {

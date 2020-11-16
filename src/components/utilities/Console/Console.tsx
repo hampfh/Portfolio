@@ -4,7 +4,7 @@ import Interpreter from 'functions/Interpreter'
 import styles from './Console.module.scss'
 import { Line, LineType, OutputMode, State as StateForComponent } from 'state/reducers/console'
 import { connect } from 'react-redux'
-import { setAll, windowVisible } from 'state/actions/console'
+import { ISetNewline, setAll, setNewline, windowVisible } from 'state/actions/console'
 import {
 	ISetChatActive,
 	setChatActive,
@@ -50,7 +50,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 				top: this.console.current?.scrollHeight,
 				behavior: 'smooth'
 			});
-			this.props.setAll({ ...this.props.console, lineWasAdded: false })
+			this.props.setNewline(false)
 		}
 	}
 
@@ -344,7 +344,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 
 						let Line = this.finishLine();
 						this.props.addChatMessage({
-							user: "[You]",
+							user: `[You]`,
 							message: Line.text,
 							timestamp: Moment().toDate()
 						})
@@ -354,6 +354,9 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 							timestamp: Moment().toDate()
 						} as IChatMessage)
 						this.startInputLine()
+						setTimeout(() => {
+							this.props.setNewline(true)
+						}, 0)
 					} else { // Default mode
 						let Line = this.finishLine();
 						let result = await this.interpreter.run(Line.text, newEvent, this.props.chat);
@@ -412,10 +415,15 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		return (
 			<>
 				{this.props.chat.active ?
-					<SocketManager subscribeTo="message" callback={async (data: IChatMessage) => {
-						await this.output(`[${data.user}]: ` + data.message, LineType.info, OutputMode.default, true);
-						this.props.addChatMessage(data)
-					}} />
+					<>
+						<SocketManager subscribeTo="message" callback={async (data: IChatMessage) => {
+							await this.output(`[${data.user}]: ` + data.message, LineType.info, OutputMode.default, true);
+							this.props.addChatMessage(data)
+						}} />
+						<SocketManager subscribeTo="enterchat" callback={async (data: { user: string }) => {
+							await this.output(`${data.user} connected to the chat`, LineType.info, OutputMode.default, true);
+						}} />
+					</>
 					: null}
 				<section ref={this.console} className={styles.console} tabIndex={0} onKeyDown={this._handleKeyCode} onKeyPress={this._handleKey}>
 					{this.props.console.lines.map(line => {
@@ -467,7 +475,8 @@ interface PropsForComponent {
 	setChatActive: ISetChatActive,
 	setChatName: ISetChatName,
 	addChatMessage: IAddChatMessage,
-	setChatState: ISetChatState
+	setChatState: ISetChatState,
+	setNewline: ISetNewline
 }
 
 const reduxSelect = (state: any) => {
@@ -484,7 +493,8 @@ const reduxDispatch = () => {
 		setChatActive,
 		setChatName,
 		addChatMessage,
-		setChatState
+		setChatState,
+		setNewline
 	}
 }
 

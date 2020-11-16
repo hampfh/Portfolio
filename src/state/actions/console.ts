@@ -1,5 +1,15 @@
 import { State, Resize } from 'state/reducers/console'
 
+export interface ISetNewline { (newline: boolean): void }
+export const setNewline = (newline: boolean) => {
+	return {
+		type: 'SET_NEWLINE',
+		payload: {
+			newline
+		}
+	}
+}
+
 export const setAll = (payload: State) => {
     return {
         type: 'SET_ALL',

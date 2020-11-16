@@ -94,9 +94,12 @@ const defaultState = {
 const console = (state: State = defaultState, action: ActionType) => {
     let newState = {...state};
     switch (action.type) {
-        case 'SET_ALL': 
-            newState = action.payload;
-            return newState;
+		case 'SET_NEWLINE':
+			newState.lineWasAdded = action.payload.newline
+			return newState
+		case 'SET_ALL': 
+			newState = action.payload;
+			return newState;
         case 'WINDOW_VISIBLE':
             newState.window.visible = action.payload.visible;
             return newState;
@@ -127,7 +130,7 @@ const console = (state: State = defaultState, action: ActionType) => {
             newState.transform.resize = action.payload.resize;
             return newState;
         default:
-            return newState;
+			return newState;
     }
 }
 
