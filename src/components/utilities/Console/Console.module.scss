@@ -37,7 +37,8 @@
 }
 
 .toolbarButton {
-    grid-row: 1;
+	grid-row: 1;
+	display: inline-block;
     height: calc(var(--terminalHeight) / 2);
     width: calc(var(--terminalHeight) / 2);
     border-radius: 50%;

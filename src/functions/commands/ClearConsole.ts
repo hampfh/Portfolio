@@ -1,7 +1,7 @@
 import { State } from 'state/reducers/console'
 import { ReturnType } from 'functions/Interpreter'
 
-export default function ClearConsole(state: State): ReturnType {
-    state.lines = [];
-    return { status: 0, state };
+export default function ClearConsole(args: string[], consoleState: State): ReturnType {
+	consoleState.lines = [];
+	return { status: 0, state: consoleState };
 }

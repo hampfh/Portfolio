@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 
 import Toolbar from './Toolbar'
-import { OutputMode, LineType } from 'state/reducers/console'
 import Console from 'components/utilities/Console/Console'
 
-import { State as ConsoleState } from 'state/reducers/console'
+import { LineType, OutputMode, State as ConsoleState } from 'state/reducers/console'
 import { 
     moving, 
     setAll,
@@ -212,7 +211,7 @@ export class ConsoleWindow extends Component<PropsForComponent> {
 									"Welcome to the page :D"
 								]
 							}
-                        ]} 
+                        ]}
                     />
                 </section>
             </>

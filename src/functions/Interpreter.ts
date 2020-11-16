@@ -5,11 +5,14 @@ import ExitConsole from 'functions/commands/ExitConsole'
 import Help from 'functions/commands/Help'
 import EjectConsole from 'functions/commands/EjectConsole'
 import Ping from 'functions/commands/Ping'
+import { EnterChat, SetChatName } from './commands/Chat'
+import { IChatState } from 'state/reducers/chat'
 
 export interface ReturnType {
     status?: number,
     message?: string | Array<string>,
-    state?: ConsoleState
+	state?: ConsoleState,
+	chatState?: IChatState
 }
 
 interface CommandArg {
@@ -27,16 +30,18 @@ const cataloge: Array<CatalogeItem> = [
     { command: 'exit', out: ExitConsole },
     { command: 'clear', out: ClearConsole },
     { command: 'eject', out: EjectConsole },
-    { command: 'ping', out: Ping }
+	{ command: 'ping', out: Ping },
+	{ command: 'chat', out: EnterChat },
+	{ command: 'setChatName', out: SetChatName }
 ]
 
 export default class Interpreter {
 
-    run(line: string, state: ConsoleState): Promise<ReturnType> {
+    run(line: string, state: ConsoleState, chatState: IChatState): Promise<ReturnType> {
         return new Promise(resolve => {
             let result = this.tokenize(line);
             // If token problem, return syntax message
-            if (result.status !== 0) {
+            if (result.status !== 0 || result.args == null || result.args.length <= 0) {
                 resolve(result)
                 return;
             }
@@ -44,14 +49,14 @@ export default class Interpreter {
             // Find command
             let command: CatalogeItem | null = null;
             for (let i = 0; i < cataloge.length; i++) {
-                if (result.result[0] === cataloge[i].command) {
+                if (result.args[0] === cataloge[i].command) {
                     command = cataloge[i];
                     break;
                 }
             }
 
             // Remove command from array, left are now only arguments
-            result.result.shift()
+            result.args.shift()
 
             if (command === null) {
                 resolve({ status: 1, message: "Command not recognized" });
@@ -59,18 +64,18 @@ export default class Interpreter {
             }
 
             // Check return type of out
-            resolve({ ...command.out(state, result.result) });
+			resolve({ ...command.out(result.args, state, chatState) });
         });
     }
 
-    tokenize(line: string): { status: number, message?: string, result?: any} {
+    tokenize(line: string): { status: number, message?: string, args: string[] } {
         let tokens = line.split(" ");
         for (let i = 0; i < tokens.length; i++) {
             let token = tokens[i];
             // If empty token, syntax error
             if (token.length <= 0)
-                return { status: 1, message: "Syntax error" }
+                return { status: 1, message: "Syntax error", args: [] }
         }
-        return { status: 0, result: tokens };
+        return { status: 0, args: tokens };
     }
 }

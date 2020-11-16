@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import console from './console'
+import chat from "./chat"
 
 export interface ActionType {
     type: string,
@@ -7,7 +8,8 @@ export interface ActionType {
 }
 
 const rootReducer = combineReducers({
-    console
+	console,
+	chat
 });
 
 export default rootReducer;
