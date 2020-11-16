@@ -2,8 +2,8 @@ import { Component } from 'react'
 import socketIo from "socket.io-client"
 
 const socket = process.env.NODE_ENV === "production" ?
-	socketIo(`${process.env.REACT_APP_REMOTE_HOST}/chat`) :
-	socketIo("http://localhost:8080")
+	socketIo(`${process.env.REACT_APP_REMOTE_HOST}`) :
+	socketIo("http://localhost:8088")
 
 export const socketEmit = (key: string, data: any) => {
 	socket.emit(key, data)
