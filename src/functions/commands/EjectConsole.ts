@@ -1,7 +1,7 @@
-import { State } from 'state/reducers/console'
+import { IConsoleState } from 'state/reducers/console'
 import { ReturnType } from 'functions/Interpreter'
 
-export default function ClearConsole(args: string[], consoleState: State): ReturnType {
+export default function ClearConsole(args: string[], consoleState: IConsoleState): ReturnType {
 	if (consoleState.transform.isEjected)
 		return { status: 1, state: consoleState, message: "Console is already ejected..."};
 

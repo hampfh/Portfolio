@@ -1,4 +1,4 @@
-import { State as ConsoleState } from 'state/reducers/console'
+import { IConsoleState } from 'state/reducers/console'
 
 import ClearConsole from 'functions/commands/ClearConsole'
 import ExitConsole from 'functions/commands/ExitConsole'
@@ -11,7 +11,7 @@ import { IChatState } from 'state/reducers/chat'
 export interface ReturnType {
     status?: number,
     message?: string | Array<string>,
-	state?: ConsoleState,
+	state?: IConsoleState,
 	chatState?: IChatState
 }
 
@@ -37,7 +37,7 @@ const cataloge: Array<CatalogeItem> = [
 
 export default class Interpreter {
 
-    run(line: string, state: ConsoleState, chatState: IChatState): Promise<ReturnType> {
+    run(line: string, state: IConsoleState, chatState: IChatState): Promise<ReturnType> {
         return new Promise(resolve => {
             let result = this.tokenize(line);
             // If token problem, return syntax message

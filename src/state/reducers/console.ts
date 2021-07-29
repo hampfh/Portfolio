@@ -29,33 +29,37 @@ export enum Resize {
     RIGHT
 }
 
-export interface State {
-    transform: {
-        isEjected: boolean,
-        isMoving: boolean,
-        resize: Resize
-        initial: {
-            x: number,
-            y: number,
-            resizeStartX: number, // Start position on resize x
-            resizeStartY: number, // Start position on resize y
-            width: number,
-            height: number
-        },
-        x: number,
+export interface ITransform {
+    isEjected: boolean
+    isMoving: boolean
+    resize: Resize
+    initial: {
+        x: number
         y: number
-        width: number,
+        resizeStartX: number
+        resizeStartY: number
+        width: number
         height: number
     }
+    x: number
+    y: number
+    width: number
+    height: number
+}
+
+export interface ICursor {
+    typing: boolean,
+    active: boolean,
+    char: string,
+    interval: NodeJS.Timeout | null
+}
+
+export interface IConsoleState {
+    transform: ITransform
     window: {
         visible: boolean
-    },
-    cursor: {
-        typing: boolean,
-        active: boolean,
-        char: string,
-        interval: NodeJS.Timeout | null
-    },
+    }
+    cursor: ICursor
     lines: Array<Line>,
     lineWasAdded: boolean
 }
@@ -91,7 +95,7 @@ const defaultState = {
     lineWasAdded: false
 }
 
-const console = (state: State = defaultState, action: ActionType) => {
+const console = (state: IConsoleState = defaultState, action: ActionType) => {
     let newState = {...state};
     switch (action.type) {
 		case 'SET_NEWLINE':

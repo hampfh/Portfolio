@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react'
 
 import { connect } from 'react-redux'
-import { State as ConsoleState } from 'state/reducers/console'
+import { IConsoleState } from 'state/reducers/console'
 import { windowVisible, setPosition, setInitialPosition, moving } from 'state/actions/console'
 
 import styles from './Console.module.scss'
@@ -65,7 +65,7 @@ interface StateForComponent {
 }
 
 interface PropsForComponent {
-    console: ConsoleState
+    console: IConsoleState
     windowVisible: Function,
     setPosition: Function, 
     setInitialPosition: Function,

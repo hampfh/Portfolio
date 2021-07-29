@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react'
 import Interpreter from 'functions/Interpreter'
 
 import styles from './Console.module.scss'
-import { Line, LineType, OutputMode, State as StateForComponent } from 'state/reducers/console'
+import { Line, LineType, OutputMode, IConsoleState } from 'state/reducers/console'
 import { connect } from 'react-redux'
 import { ISetNewline, setAll, setNewline, windowVisible } from 'state/actions/console'
 import {
@@ -18,8 +18,9 @@ import {
 import { IChatMessage, IChatState } from 'state/reducers/chat'
 import SocketManager, { socketEmit } from '../SocketManager'
 import Moment from "moment"
+import { IReduxState } from 'state/reducers'
 
-export class Console extends Component<PropsForComponent, StateForComponent> {
+export class Console extends Component<PropsForComponent, IConsoleState> {
 	currentIndex = 1;
 	cursorOnTime = 600;
 	cursorOffTime = 500;
@@ -458,7 +459,7 @@ interface PropsForComponent {
 	onLoadMessage?: Array<OutputLine>
 	interactive?: boolean,
 	chat: IChatState,
-	console: StateForComponent,
+	console: IConsoleState,
 	windowVisible: Function,
 	setAll: Function,
 
@@ -469,7 +470,7 @@ interface PropsForComponent {
 	setNewline: ISetNewline
 }
 
-const reduxSelect = (state: any) => {
+const reduxSelect = (state: IReduxState) => {
 	return {
 		chat: state.chat,
 		console: state.console

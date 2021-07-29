@@ -1,9 +1,9 @@
-import { LineType, State as ConsoleState } from "state/reducers/console"
+import { LineType, IConsoleState } from "state/reducers/console"
 import { IChatState } from "state/reducers/chat"
 import { ReturnType } from "functions/Interpreter"
 import { socketEmit } from "components/utilities/SocketManager"
 
-export function EnterChat(args: string[], consoleState: ConsoleState, chatState: IChatState): ReturnType {
+export function EnterChat(args: string[], consoleState: IConsoleState, chatState: IChatState): ReturnType {
 	chatState.active = true
 	consoleState.lines = [{ id: Math.random() * 1000, type: LineType.info, text: "Entered chat mode" }]
 
@@ -14,12 +14,12 @@ export function EnterChat(args: string[], consoleState: ConsoleState, chatState:
 	return { status: 0, state: consoleState, chatState };
 }
 
-export function LeaveChat(args: string[], consoleState: ConsoleState, chatState: IChatState): ReturnType {
+export function LeaveChat(args: string[], consoleState: IConsoleState, chatState: IChatState): ReturnType {
 	chatState.active = false
 	return { status: 0, state: consoleState, chatState }
 }
 
-export function SetChatName(args: string[], consoleState: ConsoleState, chatState: IChatState): ReturnType {
+export function SetChatName(args: string[], consoleState: IConsoleState, chatState: IChatState): ReturnType {
 	// Delete all empty arguments
 	for (let i = 0; i < args.length; i++) {
 		if (args[i].length <= 0)

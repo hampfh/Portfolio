@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ConsoleWindow from 'components/utilities/Console'
 
 import { connect } from 'react-redux'
-import { State as ConsoleState } from 'state/reducers/console'
+import { IConsoleState } from 'state/reducers/console'
 
 import { CSSTransition } from 'react-transition-group'
 import transitionStyle from 'components/utilities/Console/ConsoleTransitions.module.scss'
@@ -31,7 +31,7 @@ export class Intro extends Component<PropsForComponent> {
 }
 
 interface PropsForComponent {
-    console: ConsoleState
+    console: IConsoleState
 }
 
 const reduxSelect = (state: any) => {

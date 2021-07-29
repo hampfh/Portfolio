@@ -1,4 +1,4 @@
-import { State, Resize } from 'state/reducers/console'
+import { IConsoleState, Resize } from 'state/reducers/console'
 
 export interface ISetNewline { (newline: boolean): void }
 export const setNewline = (newline: boolean) => {
@@ -10,7 +10,7 @@ export const setNewline = (newline: boolean) => {
 	}
 }
 
-export const setAll = (payload: State) => {
+export const setAll = (payload: IConsoleState) => {
     return {
         type: 'SET_ALL',
         payload: payload
