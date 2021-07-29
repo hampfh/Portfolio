@@ -83,7 +83,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 	}
 
 	typeLine(line: string | string[], type: LineType = LineType.info, lineDelay: number, index: number | undefined = undefined) {
-		return new Promise(resolve => {
+		return new Promise<void>(resolve => {
 			const newState = { ...this.props.console }
 			if (Array.isArray(line) && index !== undefined) {
 				newState.lines.push({ id: this.currentIndex++, type, text: line[index] });
@@ -153,7 +153,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 				break;
 		}
 
-		return new Promise(resolve => {
+		return new Promise<void>(resolve => {
 			// Multiple lines
 			if (Array.isArray(data)) {
 				setTimeout(async () => {
@@ -198,7 +198,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 	}
 
 	output(text: string | Array<string> = "", type: LineType = LineType.info, method: OutputMode = OutputMode.default, preprendCurrentLine?: boolean) {
-		return new Promise(async resolve => {
+		return new Promise<void>(async resolve => {
 
 			let tempState = { ...this.props.console };
 			tempState.cursor.typing = true;
