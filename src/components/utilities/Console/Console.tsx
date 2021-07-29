@@ -34,14 +34,6 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 
 		this.currentLine = createRef();
 		this.console = createRef();
-
-		this.addCharToCurrentLine = this.addCharToCurrentLine.bind(this);
-		this.removeLastCharFromCurrentLine = this.removeLastCharFromCurrentLine.bind(this);
-		this._handleKeyCode = this._handleKeyCode.bind(this);
-		this._handleKey = this._handleKey.bind(this);
-		this.toggleCursor = this.toggleCursor.bind(this);
-		this.finishLine = this.finishLine.bind(this);
-		this.typeRecursive = this.typeRecursive.bind(this);
 	}
 
 	async componentDidUpdate() {
@@ -82,7 +74,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		}
 	}
 
-	typeLine(line: string | string[], type: LineType = LineType.info, lineDelay: number, index: number | undefined = undefined) {
+	typeLine = (line: string | string[], type: LineType = LineType.info, lineDelay: number, index: number | undefined = undefined) => {
 		return new Promise<void>(resolve => {
 			const newState = { ...this.props.console }
 			if (Array.isArray(line) && index !== undefined) {
@@ -111,7 +103,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		})
 	}
 
-	typeRecursive(index: number | Index, data: string | Array<string>, type: LineType = LineType.info, method: OutputMode = OutputMode.typing) {
+	typeRecursive = (index: number | Index, data: string | Array<string>, type: LineType = LineType.info, method: OutputMode = OutputMode.typing) => {
 		const LineDelay = {
 			char: 0,
 			space: 0,
@@ -197,7 +189,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		})
 	}
 
-	output(text: string | Array<string> = "", type: LineType = LineType.info, method: OutputMode = OutputMode.default, preprendCurrentLine?: boolean) {
+	output = (text: string | Array<string> = "", type: LineType = LineType.info, method: OutputMode = OutputMode.default, preprendCurrentLine?: boolean) => {
 		return new Promise<void>(async resolve => {
 
 			let tempState = { ...this.props.console };
@@ -253,11 +245,11 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		});
 	}
 
-	getCurrentLine() {
+	getCurrentLine = () => {
 		return this.props.console.lines[this.props.console.lines.length - 1];
 	}
 
-	removeLastCharFromCurrentLine() {
+	removeLastCharFromCurrentLine = () => {
 		let newState = { ...this.props.console };
 		let targetLine = this.getCurrentLine();
 		if (targetLine === undefined || targetLine.text.length <= 0)
@@ -273,7 +265,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		this.props.setAll(newState);
 	}
 
-	addCharToCurrentLine(char: string, type: LineType = LineType.info) {
+	addCharToCurrentLine = (char: string, type: LineType = LineType.info) => {
 		let newState = { ...this.props.console };
 		if (newState.lines.length <= 0)
 			newState.lines.push({ id: this.currentIndex++, type, text: char });
@@ -290,7 +282,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		this.props.setAll(newState);
 	}
 
-	startInputLine() {
+	startInputLine = () => {
 		// Execute line
 		let newState = { ...this.props.console };
 		// Reset cursor
@@ -302,7 +294,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		this.props.setAll(newState);
 	}
 
-	finishLine(): Line {
+	finishLine = (): Line => {
 		// Execute line
 		let newState = { ...this.props.console };
 		let lines = [...newState.lines];
@@ -328,7 +320,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		return this.getCurrentLine();
 	}
 
-	async _handleKey(event: any) {
+	_handleKey = async (event: any) => {
 		if (!!!this.props.console.cursor.typing) {
 			let newEvent = { ...this.props.console };
 			switch (event.key) {
@@ -385,14 +377,14 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 		}
 	}
 
-	_handleKeyCode(event: any) {
+	_handleKeyCode = (event: any) => {
 		if (event.keyCode === 8) {
 			event.preventDefault();
 			this.removeLastCharFromCurrentLine();
 		}
 	}
 
-	toggleCursor() {
+	toggleCursor = () => {
 		let newState = { ...this.props.console };
 		if (newState.cursor.active) {
 			let targetLine = this.getCurrentLine();
@@ -414,7 +406,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 	render() {
 		return (
 			<>
-				{this.props.chat.active ?
+				{this.props.chat.active  &&
 					<>
 						<SocketManager subscribeTo="message" callback={async (data: IChatMessage) => {
 							await this.output(`[${data.user}]: ` + data.message, LineType.info, OutputMode.default, true);
@@ -424,7 +416,7 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 							await this.output(`${data.user} connected to the chat`, LineType.info, OutputMode.default, true);
 						}} />
 					</>
-					: null}
+				}
 				<section ref={this.console} className={styles.console} tabIndex={0} onKeyDown={this._handleKeyCode} onKeyPress={this._handleKey}>
 					{this.props.console.lines.map(line => {
 
@@ -439,13 +431,11 @@ export class Console extends Component<PropsForComponent, StateForComponent> {
 								</div>
 							)
 						}
-						else {
-							return (
-								<div key={line.id} className={styles.line}>
-									<p className={styles.consoleInput + " " + styles[line.type]}>{line.text}</p>
-								</div>
-							)
-						}
+						return (
+							<div key={line.id} className={styles.line}>
+								<p className={styles.consoleInput + " " + styles[line.type]}>{line.text}</p>
+							</div>
+						)
 					})}
 				</section>
 			</>
