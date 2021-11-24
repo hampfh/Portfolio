@@ -6,7 +6,7 @@
 		"header": {
 			"title": "DataLinks",
 			"text": [
-				"KTH Datasektionens site for links and quick access to content"
+				"KTH site for links and quick access to content using a crowdsourced solution letting students contribute"
 			],
 			"aside": [
 				{
@@ -26,7 +26,18 @@
 			]
 		},
 		"sections": [
-
+            {
+                "title": "Aim",
+                "text": [
+                    "This project arose as a result of the 2020 distance work situation where all work was done remotely. Thus a lot of meetings and lectures were put online and required URLs. All this combined with our currently available tools made it feel very overwhelming and hard to get an understanding of which information was relevant and when it was needed. DataLinks was first created as a very simple single webpage where the most important links were listed. This allowed all students to quickly access information without having to search for it. "
+                ],
+                "aside": [
+                    {
+                        "title": "Project start",
+                        "text": "31 August 2020"
+                    }
+                ]
+            }
 		]
 	},
     "dotlibrary": {
