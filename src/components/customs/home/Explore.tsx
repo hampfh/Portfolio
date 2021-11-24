@@ -32,32 +32,11 @@ export class Explore extends Component<{}, StateForComponent> {
     async componentDidMount() {
         let data = [
             {
-                id: 0,
-                link: '/dotlibrary',
-                active: false,
-                title: "Dot library",
-                image: dotlibrary
-            },
-            {
-                id: 1,
-                link: '/physicssimulator',
-                active: false,
-                title: "Physics simulator",
-                image: pys
-            }, 
-            {
                 id: 2,
                 link: '/erislaw',
                 active: false,
                 title: "Erislaw webpage",
                 image: erislaw
-            },
-            {
-                id: 3,
-                link: '/cre8list',
-                active: false,
-                title: "Cre8list",
-                image: createList
             },
             {
                 id: 4,
@@ -68,7 +47,7 @@ export class Explore extends Component<{}, StateForComponent> {
 			},
 			{
 				id: 5,
-				link: "./datasektionen",
+				link: "/datasektionen",
 				active: false,
 				title: "Data links",
 				image: dataLinks

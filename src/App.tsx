@@ -1,29 +1,20 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Home from 'components/views/Home'
-import Project from 'components/views/Project'
+import Project from 'components/views/Project/Project'
 import Footer from 'components/templates/Footer'
 
 import './_root.scss'
 
-export class App extends Component {
-    render() {
-        return (
-            <Router>                
-                <Switch>
-                    <Route exact path="/"
-                        component={Home}
-                    />
-                    <Route exact path="/:project" 
-                        component={Project}
-                    />
-                </Switch>
-                <Footer />
-            </Router>
-        )
-    }
+export default function App() {
+    return (
+        <Router>                
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/:project" element={<Project />} />
+            </Routes>
+            <Footer />
+        </Router>
+    )
 }
-
-export default App
-

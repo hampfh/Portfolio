@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Toolbar from './Toolbar'
 import Console from 'components/utilities/Console/Console'
 
-import { LineType, OutputMode, State as ConsoleState } from 'state/reducers/console'
+import { IConsoleState, LineType, OutputMode } from 'state/reducers/console'
 import { 
     moving, 
     setAll,
@@ -220,7 +220,7 @@ export class ConsoleWindow extends Component<PropsForComponent> {
 }
 
 interface PropsForComponent {
-    console: ConsoleState,
+    console: IConsoleState,
     moving: Function,
     setAll: Function,
     setPosition: Function,

@@ -1,6 +1,6 @@
 {
 	"datasektionen": {
-		"url": "https://new.datasektionen.link",
+		"url": "https://datasektionen.link",
 		"repositoryLink": "https://github.com/Hampfh/DataLinks",
 		"date": "10-11-2020",
 		"header": {
@@ -17,6 +17,11 @@
 					"title": "Associations",
 					"text": "Github page",
 					"link":"https://github.com/Hampfh/Datalinks"
+				},
+                {
+                    "title": "",
+					"text": "datasektionen.link",
+					"link":"https://datasektionen.link"
 				}
 			]
 		},
@@ -187,9 +192,9 @@
         "repositoryLink": "",
         "date": "2-10-2019",
         "header": {
-            "title": "Arrender",
+            "title": "Arrenda",
             "text": [
-                "Arrender.app is a project created to simplify planning and \"get togethers\" by giving the user a simple and intuitive application with visual presentations of when people are available. This project is one of the largest projects I've worked on and has brought me much knowledge in the web-stack. Not to mention that this project was my first serious collaborative project, made together with Martin Ryberg Laude."
+                "Arrenda.app is a project created to simplify planning and \"get togethers\" by giving the user a simple and intuitive application with visual presentations of when people are available. This project is one of the largest projects I've worked on and has brought me much knowledge in the web-stack. Not to mention that this project was my first serious collaborative project, made together with Martin Ryberg Laude."
             ],
             "aside": [
                 {
@@ -198,13 +203,13 @@
                 },
                 {
                     "title": "Product",
-                    "text": "arrender.app",
-                    "link": "https://arrender.app"
+                    "text": "arrenda.app",
+                    "link": "https://arrenda.app"
                 },
                 {
                     "title": "Collaborators",
                     "text": "Martin Ryberg Laude",
-                    "link": "https://martinryberglaude.com"
+                    "link": "https://mrlaude.com"
                 }
             ]
         },
