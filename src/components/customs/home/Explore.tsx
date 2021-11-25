@@ -7,9 +7,6 @@ import animationLeft from './ExploreTransitionsLeft.module.scss'
 import styles from './Explore.module.scss'
 
 import erislaw from 'assets/erislawLogo.png'
-import dotlibrary from 'assets/dotLib.png'
-import pys from 'assets/physicsSimulator.png'
-import createList from 'assets/cre8list.png'
 import arrender from 'assets/arrender.svg'
 import dataLinks from 'assets/datasektionenLogo.png'
 

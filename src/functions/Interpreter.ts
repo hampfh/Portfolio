@@ -15,11 +15,6 @@ export interface ReturnType {
 	chatState?: IChatState
 }
 
-interface CommandArg {
-    name: string,
-    short?: string
-}
-
 interface CatalogeItem {
     command: string,
     out: Function
