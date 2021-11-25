@@ -1,5 +1,5 @@
 {
-	"datasektionen": {
+	"datalinks": {
 		"url": "https://datasektionen.link",
 		"repositoryLink": "https://github.com/Hampfh/DataLinks",
 		"date": "10-11-2020",
@@ -242,7 +242,7 @@
             }
         ]
     },
-    "arrender": {
+    "arrenda": {
         "url": "string",
         "repositoryLink": "",
         "date": "2-10-2019",
