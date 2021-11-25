@@ -7,7 +7,7 @@ import animationLeft from './ExploreTransitionsLeft.module.scss'
 import styles from './Explore.module.scss'
 
 import erislaw from 'assets/erislawLogo.png'
-import arrender from 'assets/arrender.svg'
+import arrenda from 'assets/arrender.svg'
 import dataLinks from 'assets/datasektionenLogo.png'
 
 export class Explore extends Component<{}, StateForComponent> {
@@ -37,14 +37,14 @@ export class Explore extends Component<{}, StateForComponent> {
             },
             {
                 id: 4,
-                link: '/arrender',
+                link: '/arrenda',
                 active: true,
-                title: "Arrender",
-                image: arrender
+                title: "Arrenda",
+                image: arrenda
 			},
 			{
 				id: 5,
-				link: "/datasektionen",
+				link: "/datalinks",
 				active: false,
 				title: "Data links",
 				image: dataLinks
