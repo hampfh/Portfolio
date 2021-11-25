@@ -6,7 +6,8 @@
 		"header": {
 			"title": "DataLinks",
 			"text": [
-				"KTH site for links and quick access to content using a crowdsourced solution letting students contribute"
+				"KTH site for links and quick access to content",
+                "DataLinks is a web application aiming to gather content in an easy-to-reach way and at the same time provide users to contribute with a Wikipedia-like approach. The site is built on workspaces that can be implemented for different programs where all content is contained. "
 			],
 			"aside": [
 				{
@@ -35,6 +36,49 @@
                     {
                         "title": "Project start",
                         "text": "31 August 2020"
+                    }
+                ]
+            }, {
+                "title": "Challenges",
+                "text": [
+                    "As mentioned above initially DataLinks was just a simple board displaying the most important links, hardcoded, meaning that I had to go into the code and perform changes to update the content of the page. As one might realize this wasn't feasible as time passed and I, therefore, started working on a \"wiki backend\" which would allow anyone to contribute to the page and perform changes. This in term made content more up to date as I now wasn't the only one that could update content. ",
+                    "This system defines a couple of building blocks that can be scaled to create whole pages for a specific subject. The system uses nested content by defining contentful widgets such as links, text, and deadlines and then groups which are containers for content. Together it is possible to create dynamic pages with their own layout, thus making it very easy for people other than myself to update content.",
+                    "Another challenge I've had with this project is UI/UX, I'm generally drawn to the more functional aspects of projects but since this was a solo project I was also required to create the visuals. During the lifetime of the application there have been a few different designs, the most iconic and long-lasting being the one presented below."
+                ],
+                "aside": [
+                    {
+                        "title": "Wiki backend",
+                        "text": "29 October 2020"
+                    }
+                ],
+                "image": [
+                    "datalinks-previous-design.png"
+                ]
+            }, {
+                "title": "",
+                "text": [
+                    "The design process here has been to get to subject-specific content with as few clicks as possible. This was previously solved with a hover effect that revealed a preview of the subject page content which is visible in the image above. This design was relatively good at quick access as it allowed for the user to get to desired content sometimes without any clicks at all, however, the design wasn't very pretty and felt very non-robust because of the very customized \"preview container\". This feature worked very well within its boundaries but had a lot of edge cases that made it feel like a very hacky solution. Therefore in version v4.0.0, the whole application was redesigned with both UX and UI in mind. Unlike earlier I actually sat down and planned routes, layout, etc in Adobe XD before writing. The first thing that changed was the color theme, the primary color used before was cerise, a very strong color that overwhelmed the user. This was instead replaced with a color theme with a lot of inspiration from Github.  "
+                ],
+                "aside": [
+                    {
+                        "title": "Redesign",
+                        "text": "22 September 2021"
+                    },
+                    {
+                        "title": "Github version",
+                        "text": "v4.0.0",
+                        "link": "https://github.com/Hampfh/DataLinks/releases/tag/v4.0.0"
+                    }
+                ]
+            }, {
+                "title": "Open source",
+                "text": [
+                    "The project was initially closed source in a private repository on Github, however, after some time I realized that the project was missing out on a lot of feedback and contribution potential and therefore decided to make the project public. Since then a lot of feedback has been received in the repository which has been very helpful when developing. The contributions however have been very sparse, drastically under my initial expectations. I have some theories why this is. The most obvious reason is probably that students simply don't have time to contribute alongside active courses, this however is outside of my control. What isn't out of my control is to set the barrier of entry which currently is very high for the project, marking by second theory why people hesitate to contribute. This can be battled in multiple ways with more comments, documentation tests etc. Documentation being one that is on the list of things to implement."
+                ],
+                "aside": [
+                    {
+                        "title": "Open source",
+                        "text": "11 December 2020"
                     }
                 ]
             }

@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import GithubRepository from 'components/utilities/Repository'
 import { v4 as uuid } from "uuid"
@@ -11,32 +10,9 @@ import Aside from "./Aside"
 
 export default function Project() {
 
-    const projectParam = useParams<"project">()
+    const projectParam = useParams<"project">() as unknown as { project: keyof (typeof articles) | undefined }
 
-    let article: IArticle | undefined
-    switch (projectParam.project) {
-        case 'datasektionen':
-            article = articles['datasektionen'];
-            break;
-        case 'dotlibrary':
-            article = articles['dotlibrary'];
-            break;
-        case 'physicssimulator':
-            article = articles['physicssimulator'];
-            break;
-        case 'erislaw':
-            article = articles['erislaw'];
-            break;
-        case 'arrender':
-            article = articles['arrender'];
-            break;
-    }
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
-
-    if (article == null) {
+    if (projectParam.project == null || articles[projectParam.project] == null) {
         return (
             <div className={errorStyles.container}>
                 <div className={errorStyles.textContainer}>
@@ -51,6 +27,8 @@ export default function Project() {
             </div>
         )
     }
+
+    const article: IArticle | undefined = articles[projectParam.project] 
 
     return (
         <section className={styles.masterContainer}>
@@ -85,9 +63,7 @@ export default function Project() {
                             </div>
                             <Aside textSection={section} />                            
                             <div className={styles.imageContainer}>
-                                {section.image?.map(image => {
-                                    return <img className={styles.textImage} src={require(`assets/${image}`)} alt="" />
-                                })}
+                                {section.image?.map(image => <img className={styles.textImage} key={uuid()} src={require(`assets/content/${image}`).default} alt="" />)}
                             </div>
                         </section>
                     )
