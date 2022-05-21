@@ -2,7 +2,7 @@ import styles from './About.module.scss'
 
 export default function About() {
 
-    const collegeYear = new Date().getFullYear() - 2020 + 1
+    const collegeYear = new Date().getFullYear() - 2020 + (new Date().getMonth() > 6 ? 1 : 0)
     
     function getSuffix(number: number) {
         switch (number % 10) {
