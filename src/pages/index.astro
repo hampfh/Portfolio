@@ -1,0 +1,89 @@
+---
+import { Image } from "@astrojs/image/components"
+import Layout from "../layouts/layout.astro"
+
+import imageWalk from "../images/hampe-walk.jpg"
+import imageWall from "../images/hampe-wall.jpg"
+import Nametag from "../components/nametag.astro"
+import Social from "../components/social.astro"
+---
+
+<Layout>
+  <div class="page-wrapper">
+    <div class="absolute flex justify-center items-center z-10">
+      <a href="/projects">
+        <div
+          class="bubble-container absolute w-52 lg:w-64 top-20 left-0 sm:left-64 transition-all hover:scale-105 cursor-pointer"
+        >
+          <div class="icon-container z-50"></div>
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M40.6,-68.6C51.3,-64.2,57.8,-50.6,66.7,-37.7C75.6,-24.7,87,-12.4,89.5,1.4C92,15.2,85.6,30.5,75.2,40.9C64.9,51.4,50.6,57.1,37.4,63C24.2,69,12.1,75.2,0.6,74.1C-10.8,73,-21.7,64.7,-34.4,58.5C-47.2,52.3,-61.8,48.2,-69.8,38.8C-77.8,29.4,-79.3,14.7,-78,0.8C-76.7,-13.2,-72.6,-26.4,-65.3,-37C-57.9,-47.6,-47.3,-55.6,-35.9,-59.6C-24.5,-63.6,-12.2,-63.7,1.4,-66C15,-68.4,29.9,-73.1,40.6,-68.6Z"
+              transform="translate(100 100)"></path>
+            <text
+              x="50%"
+              y="50%"
+              dominant-baseline="middle"
+              text-anchor="middle"
+              font-size="0.8rem"
+              fill="#fecdd3">Open Portfolio</text
+            >
+          </svg>
+        </div>
+      </a>
+    </div>
+    <div
+      class="absolute w-[100vw] h-[100vh] flex justify-center items-center -z-0"
+    >
+      <div class="relative flex-1 max-w-5xl">
+        <Image
+          onload="this.classList.add('loaded')"
+          src={imageWalk}
+          alt="Hampus Hallkvist"
+          class="animate absolute w-96 aspect-7952/5304 m-[-1rem] top-10 left-0 rounded-xl opacity-0 transition-opacity duration-300 rotate-6"
+        />
+        <Image
+          onload="this.classList.add('loaded')"
+          src={imageWall}
+          alt="Hampus Hallkvist"
+          class="animate absolute w-52 aspect-4000/6000 bottom-0 right-0 rounded-xl opacity-0 transition-opacity duration-300 -rotate-3"
+        />
+      </div>
+    </div>
+    <div
+      class="w-[100vw] h-[100vh] flex flex-col justify-center items-center z-10"
+    >
+      <Nametag />
+      <Social />
+    </div>
+  </div>
+  <style>
+    .loaded {
+      opacity: 0.1 !important;
+    }
+    @media (min-width: 640px) {
+      .loaded {
+        opacity: 0.4 !important;
+      }
+    }
+  </style>
+  <style is:global>
+    .transition-fade svg {
+      fill: #4c0519;
+    }
+    html.is-animating.to-route-projects .transition-fade .bubble-container text,
+    html.is-animating.to-route-projects
+      .transition-fade
+      .bubble-container
+      .icon-container {
+      transition: 0;
+      opacity: 0;
+    }
+    html.is-animating.to-route-projects .transition-fade .bubble-container {
+      transition-timing-function: ease-in;
+      transform: scale(15);
+      opacity: 1;
+      /*       fill: #300310; */
+    }
+  </style>
+</Layout>

@@ -1,0 +1,89 @@
+---
+import "@fontsource/twinkle-star"
+const {
+  bgColor = "bg-pink-100",
+  title = "Hampus Hallkvist",
+  description = "Hampus Hallkvist, Student and Full-Stack developer"
+} = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="language" content="en" />
+    <meta name="author" content="Hampus Hallkvist" />
+    <meta
+      name="keywords"
+      content="Hampus Hallkvist, Full-Stack developer, student, sweden, web, app"
+    />
+    <meta name="country" content="Sweden" />
+    <meta name="og:title" content={title} />
+    <meta name="og:description" content={description} />
+    <script>
+      import Swup from "swup"
+      import SwupPreloadPlugin from "@swup/preload-plugin"
+      import SwupHeadPlugin from "@swup/head-plugin"
+
+      import SwupRouteNamePlugin from "@swup/route-name-plugin"
+
+      const swup = new Swup({
+        plugins: [
+          new SwupHeadPlugin({
+            awaitAssetes: true,
+            persistTags: true
+          }),
+          new SwupPreloadPlugin(),
+          new SwupRouteNamePlugin({
+            routes: [
+              { name: "home", path: "/" },
+              { name: "projects", path: "/projects" }
+            ]
+          })
+        ]
+      })
+
+      window.swup = swup
+    </script>
+  </head>
+  <body class="flex flex-1">
+    <div
+      id="swup"
+      class={`${bgColor} transition-fade flex-1 w-full min-h-[100vh] relative`}
+    >
+      <slot />
+    </div>
+  </body>
+
+  <style is:global>
+    .transition-fade {
+      transition-duration: 0.5s;
+      opacity: 1;
+    }
+    .transition-fade > * {
+      transition-duration: 0.5s;
+      opacity: 1;
+    }
+
+    html.is-animating .transition-fade > * {
+      opacity: 0;
+    }
+
+    html.is-animating.from-route-home {
+      background-color: #300310;
+    }
+
+    html.is-animating.from-route-home .transition-fade svg {
+      opacity: 1;
+      z-index: -10;
+    }
+
+    html.is-animating.to-route-projects .transition-fade {
+      transition-duration: 0.3s;
+      background-color: #300310;
+    }
+  </style>
+</html>

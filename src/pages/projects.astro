@@ -1,0 +1,40 @@
+---
+import Project from "../components/project.astro"
+import Layout from "../layouts/layout.astro"
+---
+
+<Layout bgColor="bg-[#260d14]">
+  <div class="projects-wrapper relative z-20 flex items-center flex-col">
+    <h1 class="my-5 text-7xl font-bold text-pink-100">Portfolio</h1>
+    <a href="/" class="text-pink-300">Back to home</a>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full max-w-[60rem] mt-5 bg-black rounded-3xl"
+    >
+      <Project
+        title={"Github profile"}
+        subtitle="github.com/hampfh/hampfh"
+        image="github-profile"
+        borderConf="lg:rounded-tl-2xl"
+        hasLink
+      />
+      <Project
+        title={"Datalinks"}
+        subtitle="datasektionen.link"
+        borderConf="lg:rounded-tr-2xl"
+        image="datasektionen"
+        hasLink
+      />
+      <Project
+        title={"Havsfonden"}
+        subtitle="havsfond.se"
+        image="havsfond"
+        hasLink
+      />
+      <Project
+        title={"Nyström Bike"}
+        subtitle="An app for communicating with Nyström E-bikes"
+        image="nyström_bike"
+      />
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,22 @@
+---
+import { Image } from "@astrojs/image/components"
+import GithubLogo from "../images/icons/github-mark.svg"
+import LinkedInLogo from "../images/icons/linkedin-logo.svg"
+---
+
+<div class="flex gap-5 mt-10 z-40">
+  <a href="https://github.com/hampfh">
+    <Image
+      src={GithubLogo}
+      alt="Github logo"
+      class="w-10 h-10 hover:cursor-pointer hover:scale-105 transition-all"
+    />
+  </a>
+  <a href="https://www.linkedin.com/in/hampus-hallkvist-a9a208166">
+    <Image
+      src={LinkedInLogo}
+      alt="LinkedIn logo"
+      class="w-10 h-10 hover:scale-105 transition-all"
+    />
+  </a>
+</div>

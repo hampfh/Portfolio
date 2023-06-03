@@ -1,0 +1,53 @@
+---
+import { Image } from "@astrojs/image/components"
+import Havsfond from "../images/havsfond.png"
+import GithubProfile from "../images/github-profile.png"
+import Datasektionen from "../images/datasektionen.png"
+import NyströmBike from "../images/nystrom_bike.jpg"
+const { title, image, subtitle, hasLink, borderConf } = Astro.props
+
+function getImage(image: string) {
+  switch (image) {
+    case "havsfond": {
+      return Havsfond
+    }
+    case "github-profile": {
+      return GithubProfile
+    }
+    case "datasektionen": {
+      return Datasektionen
+    }
+    case "nyström_bike": {
+      return NyströmBike
+    }
+    default: {
+      return Havsfond
+    }
+  }
+}
+const imageFile = getImage(image)
+---
+
+<div class={`project-wrapper relative flex-1 ${borderConf} overflow-hidden`}>
+  <div
+    class="absolute opacity-0 hover:opacity-90 w-full h-full flex justify-center items-center bg-black flex-col z-10"
+  >
+    <h3 class="text-pink-300 text-4xl font-bold">{title}</h3>
+    {
+      hasLink ? (
+        <a href={hasLink ? `https://${subtitle}` : ""}>
+          <h4 class="text-xl text-pink-300 filter hover:brightness-125">
+            {subtitle}
+          </h4>
+        </a>
+      ) : (
+        <h4 class="text-xl text-pink-300">{subtitle}</h4>
+      )
+    }
+  </div>
+  <Image
+    src={imageFile}
+    alt="Havsfond"
+    class="flex object-cover w-full h-full filter saturate-[0.5] hover:brightness-[0.25]"
+  />
+</div>
