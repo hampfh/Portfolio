@@ -7,7 +7,7 @@ const {
 } = Astro.props
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -33,7 +33,7 @@ const {
       const swup = new Swup({
         plugins: [
           new SwupHeadPlugin({
-            awaitAssetes: true,
+            awaitAssets: true,
             persistTags: true
           }),
           new SwupPreloadPlugin(),
