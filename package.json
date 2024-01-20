@@ -13,8 +13,6 @@
     "@astrojs/react": "^3.0.9",
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource/twinkle-star": "^5.0.18",
-    "@sentry/astro": "^7.94.1",
-    "@spotlightjs/astro": "^1.0.10",
     "@swup/head-plugin": "^2.1.2",
     "@swup/preload-plugin": "^3.2.7",
     "@swup/route-name-plugin": "^4.1.0",
