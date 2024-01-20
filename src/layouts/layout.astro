@@ -23,6 +23,7 @@ const {
     <meta name="country" content="Sweden" />
     <meta name="og:title" content={title} />
     <meta name="og:description" content={description} />
+
     <script>
       import Swup from "swup"
       import SwupPreloadPlugin from "@swup/preload-plugin"
@@ -30,7 +31,7 @@ const {
 
       import SwupRouteNamePlugin from "@swup/route-name-plugin"
 
-      const swup = new Swup({
+      new Swup({
         plugins: [
           new SwupHeadPlugin({
             awaitAssets: true,
@@ -45,8 +46,6 @@ const {
           })
         ]
       })
-
-      window.swup = swup
     </script>
   </head>
   <body class="flex flex-1">

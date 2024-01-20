@@ -37,16 +37,14 @@ import Social from "../components/social.astro"
     >
       <div class="relative flex-1 max-w-5xl">
         <Image
-          onload="this.classList.add('loaded')"
           src={imageWalk}
           alt="Hampus Hallkvist"
-          class="animate absolute w-96 aspect-7952/5304 m-[-1rem] top-10 left-0 rounded-xl opacity-0 transition-opacity duration-300 rotate-6"
+          class="animate absolute w-96 aspect-7952/5304 m-[-1rem] top-10 left-0 rounded-xl transition-opacity duration-300 rotate-6"
         />
         <Image
-          onload="this.classList.add('loaded')"
           src={imageWall}
           alt="Hampus Hallkvist"
-          class="animate absolute w-52 aspect-4000/6000 bottom-0 right-0 rounded-xl opacity-0 transition-opacity duration-300 -rotate-3"
+          class="animate absolute w-52 aspect-4000/6000 bottom-0 right-0 rounded-xl transition-opacity duration-300 -rotate-3"
         />
       </div>
     </div>
@@ -57,16 +55,6 @@ import Social from "../components/social.astro"
       <Social />
     </div>
   </div>
-  <style>
-    .loaded {
-      opacity: 0.1 !important;
-    }
-    @media (min-width: 640px) {
-      .loaded {
-        opacity: 0.4 !important;
-      }
-    }
-  </style>
   <style is:global>
     .transition-fade svg {
       fill: #4c0519;
