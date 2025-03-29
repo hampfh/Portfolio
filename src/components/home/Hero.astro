@@ -1,11 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import { GLOBAL } from "../../lib/variables";
+import personLogo from "./person-logo.png";
 ---
 
 <div class="flex flex-col items-center sm:flex-row gap-8">
   <Image
-    src={`/${GLOBAL.profileImage}`}
+    src={personLogo}
     width={160}
     height={160}
     alt={GLOBAL.username}

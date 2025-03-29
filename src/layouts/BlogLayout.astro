@@ -11,6 +11,7 @@ import type { MarkdownLayoutProps } from "astro";
 import Prose from "../components/Prose.astro";
 import Layout from "./Layout.astro";
 import Posthog from "../components/posthog.astro";
+import { ClientRouter } from "astro:transitions";
 
 type Props = MarkdownLayoutProps<ArticleFrontmatter>;
 
@@ -22,6 +23,7 @@ const sourceUrl = generateSourceUrl(frontmatter.filename, "blog");
 
 <Layout>
   <Fragment slot="head">
+    <ClientRouter />
     <title>{frontmatter.title} • {GLOBAL.username}</title>
     <meta name="description" content={frontmatter.description} />
     <meta
