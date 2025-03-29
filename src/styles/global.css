@@ -34,10 +34,10 @@
   --font-display: "press-start-2p", ui-monospace, monospace;
   --font-serif: "Literata Variable", ui-serif, Georgia, Cambria,
     "Times New Roman", Times, serif;
-  --color-dark: var(--color-neutral-900);
-  --color-light: var(--color-neutral-100);
+  --color-dark: var(--color-stone-800);
+  --color-light: var(--color-stone-200);
   --color-dark-muted: var(--color-neutral-600);
-  --color-light-muted: var(--color-neutral-400);
+  --color-light-muted: var(--color-stone-400);
   --color-accent-light: var(--color-emerald-400);
   --color-accent-light-muted: var(--color-emerald-300);
   --color-accent-dark: var(--color-emerald-600);

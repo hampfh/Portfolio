@@ -12,7 +12,7 @@ const year = date.getFullYear();
     <div
       class="hampfh-border-b hampfh-transition pb-4 flex flex-col sm:flex-row sm:flex-nowrap gap-8 sm:items-center"
     >
-      <ul class="flex flex-col gap-2">
+      <ul class="flex gap-4">
         {
           Object.entries(GLOBAL.menu).map((i) => (
             <li>
@@ -22,7 +22,7 @@ const year = date.getFullYear();
         }
       </ul>
       <div class="flex w-full"></div>
-      <div class="flex flex-row sm:flex-col gap-4">
+      <div class="flex flex-row gap-4">
         {
           GLOBAL.githubProfile && (
             <Anchor url={GLOBAL.githubProfile} aria-label="GitHub Profile">
