@@ -8,6 +8,7 @@ import "../styles/global.css";
 <!doctype html>
 <html lang="en" class="dark">
   <head>
+    <Posthog />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
@@ -18,7 +19,6 @@ import "../styles/global.css";
       rel="stylesheet"
     />
     <slot name="head" />
-    <Posthog />
   </head>
   <body class="hampfh-bg hampfh-text hampfh-transition font-mono">
     <Header />
