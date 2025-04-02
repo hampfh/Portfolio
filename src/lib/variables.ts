@@ -23,14 +23,13 @@ export const GLOBAL = {
 
   // Blog metadata
   blogTitle: "My Thoughts & Takes",
-  blogShortDescription: "Practical wisdom, unfiltered thoughts, and hot takes.",
+  blogShortDescription: "Practical wisdom, some thoughts, and a few takes. ",
   blogLongDescription:
     "Web development, tech trends, and the occasional programming mishap.",
 
   // Project metadata
   projectTitle: "Projects and Code",
-  projectShortDescription:
-    "A list of my web development projects and developer tools.",
+  projectShortDescription: "A list of my dev projects and tools.",
   projectLongDescription:
     "All of my projects, including both frontend and full-stack applications.",
 
