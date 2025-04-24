@@ -9,4 +9,10 @@ featured: true
 filename: eventro
 ---
 
-Eventro is a project conducted together with [Didrik Munther](https://github.com/didrikmunther) and [Leonard Hökby](https://github.com/binghawk). Together we've built an all-in-one platform for managing your student career fair. It comes with build in recruitment management, company portal for external parties to select products, a nisched CRM and a lot of other features.
+Eventro is a project conducted together with [Didrik Munther](https://github.com/didrikmunther) and [Leonard Hökby](https://github.com/binghawk). Together we've built an all-in-one platform for managing your student career fair. It comes with a built in recruitment management, company portal for external parties to select products, a nisched CRM and a lot of other features.
+
+## Tech stack
+
+- NextJS
+- Postgres
+- TailwindCSS
