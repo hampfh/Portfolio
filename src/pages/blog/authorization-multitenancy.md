@@ -4,7 +4,7 @@ title: Thoughts on authorization in multitenancy
 description: A brain dump on authorization in multitenancy after having worked on some different projects using it.
 tags: ["auth", "sql"]
 time: 5
-featured: true
+featured: false
 timestamp: 2025-03-29T02:39:03+00:00
 filename: authorization-multitenancy
 ---
