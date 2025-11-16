@@ -4,8 +4,8 @@ export const GLOBAL = {
   // Site metadata
   username: "Hampus Hallkvist",
   rootUrl: "https://hallkvi.st",
-  shortDescription: "Software Engineer @ Tandem Health",
-  longDescription: "Software Engineer @ Tandem Health",
+  shortDescription: "Software Engineer | Co-founder",
+  longDescription: "Software Engineer | Co-founder",
 
   // Social media links
   githubProfile: "https://github.com/hampfh",
