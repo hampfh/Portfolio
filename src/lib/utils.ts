@@ -23,31 +23,24 @@ export const processContentInDir = async <T extends object, K>(
   dir: string = process.cwd()
 ) => {
   const files = await fs.readdir(dir + `/src/pages/${contentType}`);
-  const markdownFiles = files
-    .filter((file: string) => file.endsWith(".md"))
-    .map((file) => file.split(".")[0]);
+  const markdownFiles = files.filter(
+    (file: string) => file.endsWith(".md") || file.endsWith(".mdx")
+  );
   const readMdFileContent = async (file: string) => {
-    if (contentType === "projects") {
-      const content = import.meta
-        .glob(`/src/pages/projects/*.md`)
-        [`/src/pages/projects/${file}.md`]();
-      const data = (await content) as {
-        frontmatter: T;
-        file: string;
-        url: string;
-      };
-      return processFn(data);
-    } else {
-      const content = import.meta
-        .glob(`/src/pages/blog/*.md`)
-        [`/src/pages/blog/${file}.md`]();
-      const data = (await content) as {
-        frontmatter: T;
-        file: string;
-        url: string;
-      };
-      return processFn(data);
-    }
+    const importers =
+      contentType === "projects"
+        ? import.meta.glob([
+            `/src/pages/projects/*.md`,
+            `/src/pages/projects/*.mdx`,
+          ])
+        : import.meta.glob([`/src/pages/blog/*.md`, `/src/pages/blog/*.mdx`]);
+    const content = importers[`/src/pages/${contentType}/${file}`]();
+    const data = (await content) as {
+      frontmatter: T;
+      file: string;
+      url: string;
+    };
+    return processFn(data);
   };
   return await Promise.all(markdownFiles.map(readMdFileContent));
 };

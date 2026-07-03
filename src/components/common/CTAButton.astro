@@ -1,0 +1,16 @@
+---
+export type Props = {
+    label: string;
+    url: string;
+};
+
+const { label, url } = Astro.props;
+---
+
+<div class="flex flex-row gap-2 select-none bg-white px-3 py-1 rounded-md hover:opacity-80">
+    <a href={url} target="_blank">
+        <button class="text-black hover:underline">
+            {label}
+        </button>
+    </a>
+</div>
